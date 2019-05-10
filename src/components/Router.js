@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { getAuth } from '../store/auth';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import Login from '../containers/LoginCon';
+import Header from '../containers/HeaderCon';
 import Main from './Main';
 
 const Router = ({ getAuth, loading, isAuthenticated }) => {
@@ -20,10 +21,13 @@ const Router = ({ getAuth, loading, isAuthenticated }) => {
 					<Redirect from="*" to="/" />
 				</Switch>
 			) : (
-				<Switch>
-					<Route exact path="/" component={Main} />
-					<Redirect from="*" to="/" />
-				</Switch>
+				<>
+					<Header />
+					<Switch>
+						<Route exact path="/" component={Main} />
+						<Redirect from="*" to="/" />
+					</Switch>
+				</>
 			)}
 		</BrowserRouter>
 	);
