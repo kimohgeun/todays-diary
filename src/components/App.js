@@ -1,10 +1,11 @@
 import React from 'react';
 import GlobalStyle from './GlobalStyle';
+import Router from './Router';
 
 const App = () => (
 	<>
 		<GlobalStyle />
-    <span>오늘의 일기</span>
+		<Router />
 	</>
 );
 
