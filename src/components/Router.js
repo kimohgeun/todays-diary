@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { getAuth } from '../store/auth';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import Loading from '../components/Loading';
 import Login from '../containers/LoginCon';
 import Header from '../containers/HeaderCon';
 import Main from './Main';
@@ -10,11 +11,11 @@ import Main from './Main';
 const Router = ({ getAuth, loading, isAuthenticated }) => {
 	useEffect(() => {
 		getAuth();
-	}, {});
+	}, []);
 	return (
 		<BrowserRouter>
 			{loading ? (
-				'Loading...'
+				<Loading />
 			) : !isAuthenticated ? (
 				<Switch>
 					<Route exact path="/" component={Login} />
