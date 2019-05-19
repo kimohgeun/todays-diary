@@ -6,7 +6,7 @@ import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import Loading from '../components/Loading';
 import Login from '../containers/LoginCon';
 import Header from '../containers/HeaderCon';
-import Main from './Main';
+import MonthList from '../containers/MonthListCon';
 
 const Router = ({ getAuth, loading, isAuthenticated }) => {
 	useEffect(() => {
@@ -25,7 +25,7 @@ const Router = ({ getAuth, loading, isAuthenticated }) => {
 				<>
 					<Header />
 					<Switch>
-						<Route exact path="/" component={Main} />
+						<Route exact path="/" component={MonthList} />
 						<Redirect from="*" to="/" />
 					</Switch>
 				</>

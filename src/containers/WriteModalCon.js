@@ -22,12 +22,12 @@ const WriteModalCon = ({
 	const onSetDate = () => {
 		const date = new Date();
 		const year = date.getFullYear();
-		const month = date.getMonth() + 1;
+		const month = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
 		const day = date.getDate();
-		const dayOfWeek = ['일', '월', '화', '수', '목', '금', '토'];
+		const dayOfWeek = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
 		setDate({
 			year,
-			month,
+			month: month[date.getMonth()],
 			day,
 			dayOfWeek: dayOfWeek[date.getDay()],
 		});
@@ -54,10 +54,12 @@ const WriteModalCon = ({
 		const uid = user.uid;
 		const text = input.replace(/\n/g, '<br/>');
 		const data = {
+			id: `${date.year}-${date.month}-${date.day}`,
 			year: date.year.toString(),
 			month: date.month.toString(),
 			day: date.day.toString(),
 			dayOfWeek: date.dayOfWeek,
+			weather,
 			text,
 		};
 		writeDiary(uid, data);

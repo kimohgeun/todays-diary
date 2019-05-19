@@ -15,7 +15,7 @@ const fade = keyframes`
 const Box = styled.div`
 	width: 100%;
 	height: 100vh;
-	background-color: #ecf0f1;
+	background-color: #fafafa;
 	display: ${props => (props.toggle ? 'flex' : 'none')};
 	justify-content: center;
 	align-items: center;
@@ -43,9 +43,12 @@ const Container = styled.div`
 
 const Date = styled.span`
 	font-weight: 700;
-	font-size: 0.8rem;
+	font-size: 0.7rem;
 	margin: 10px 0;
 	display: inline-block;
+	border: 1px solid #ccc;
+	padding: 5px 10px;
+	border-radius: 10px;
 `;
 
 const WeatherContainer = styled.div`
@@ -139,12 +142,12 @@ const WriteModal = ({
 	uploaded,
 	loading,
 }) => (
-	<Box toggle={!toggle}>
+	<Box toggle={toggle}>
 		<CancelIcon className="fas fa-times" onClick={onSetToggle} />
 		{loading && <Loading />}
 		<Form onSubmit={onSubmit}>
 			<Container>
-				<Date>{`${date.month}월 ${date.day}일 ${date.dayOfWeek}요일`}</Date>
+				<Date>{`${date.dayOfWeek}. ${date.month} ${date.day} / ${date.year}`}</Date>
 				<WeatherContainer>
 					<WeatherIcon
 						className="fas fa-sun"

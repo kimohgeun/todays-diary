@@ -18,7 +18,7 @@ const HeaderCon = ({ logout, uploaded, initState }) => {
 			setTimeout(() => {
 				initState();
 				onSetToggle();
-			}, 3500);
+			}, 3000);
 		}
 	}, [uploaded]);
 
