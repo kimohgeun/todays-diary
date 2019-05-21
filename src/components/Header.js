@@ -14,6 +14,7 @@ const Box = styled.div`
 	padding: 0 50px;
 	position: fixed;
 	top: 0px;
+	z-index: 1;
 `;
 
 const Title = styled.span`
@@ -43,8 +44,8 @@ const Header = withRouter(({ location: { pathname }, onLogout, toggle, onSetTogg
 				<Link to="/">
 					<Icon className="fas fa-list" pathname={pathname === '/'} />
 				</Link>
-				<Link to="/year">
-					<Icon className="fas fa-calendar-day" pathname={pathname === '/year'} />
+				<Link to="/year_list">
+					<Icon className="fas fa-calendar-day" pathname={pathname === '/year_list'} />
 				</Link>
 				<Icon className="fas fa-pencil-alt" onClick={onSetToggle} />
 				<Link to="/setting">

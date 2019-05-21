@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import MonthItem from '../components/MonthItem';
+import YearItem from './YearItem';
 
 const Box = styled.div`
 	width: 1024px;
@@ -19,16 +19,18 @@ const Container = styled.ul`
 	width: 100%;
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
-	grid-gap: 20px;
+	grid-gap: 100px;
 `;
 
-const MonthList = ({ month, monthDiaries }) => (
+const YearList = ({ yearList }) => (
 	<Box>
-		<Title>{month}월의 일기</Title>
+		<Title>일기장 목록</Title>
 		<Container>
-			{monthDiaries.lenth !== 0 && monthDiaries.map(diary => <MonthItem key={diary.id} diary={diary} />)}
+			{yearList.map(year => (
+				<YearItem key={year} year={year} />
+			))}
 		</Container>
 	</Box>
 );
 
-export default MonthList;
+export default YearList;

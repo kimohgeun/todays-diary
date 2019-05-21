@@ -15,14 +15,15 @@ const fade = keyframes`
 const Box = styled.div`
 	width: 100%;
 	height: 100vh;
-	background-color: #fafafa;
+	background-color: #424242;
 	display: ${props => (props.toggle ? 'flex' : 'none')};
 	justify-content: center;
 	align-items: center;
 	flex-wrap: wrap;
 	position: fixed;
 	top: 0px;
-	animation: ${fade} 0.5s linear;
+	animation: ${fade} 0.3s linear;
+	z-index: 1;
 `;
 
 const Form = styled.form`
@@ -88,7 +89,7 @@ const ClockIcon = styled.i`
 
 const CancelIcon = styled.i`
 	font-size: 1.5rem;
-	color: #424242;
+	color: #fff;
 	margin: 10px 0;
 	&:hover {
 		transform: scale(1.2);

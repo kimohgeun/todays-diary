@@ -77,7 +77,7 @@ const MonthItem = ({ diary }) => (
 			<DayOfWeek color={diary.dayOfWeek}>{diary.dayOfWeek}</DayOfWeek>
 			<Weather className={diary.weather} />
 		</LeftContainer>
-		<RightContainer>{diary.text}</RightContainer>
+		<RightContainer>{diary.text.replace(/<br\s*\/?>/gm, '\n')}</RightContainer>
 	</Container>
 );
 

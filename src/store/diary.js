@@ -6,6 +6,7 @@ const ADD_TIME = 'ADD_TIME';
 const WRITE_DIARY = 'WRITE_DIARY';
 const INIT_STATE = 'INIT_STATE';
 const GET_MONTH_DIARIES = 'GET_MONTH_DIARIES';
+const GET_YEAR_LIST = 'GET_YEAR_LIST';
 
 export const changeInput = input => {
 	return {
@@ -42,9 +43,7 @@ export const addTime = () => {
 export const writeDiary = (uid, data) => dispatch => {
 	firebase
 		.firestore()
-		.collection('diary')
-		.doc(uid)
-		.collection(data.year)
+		.collection(uid)
 		.add(data)
 		.then(() =>
 			dispatch({
@@ -66,13 +65,10 @@ export const initState = () => {
 export const getMonthDiaries = uid => dispatch => {
 	const monthDiaries = [];
 	const date = new Date();
-	const year = date.getFullYear();
 	const month = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
 	firebase
 		.firestore()
-		.collection('diary')
-		.doc(uid)
-		.collection(year.toString())
+		.collection(uid)
 		.where('month', '==', month[date.getMonth()])
 		.get()
 		.then(docs => {
@@ -84,7 +80,7 @@ export const getMonthDiaries = uid => dispatch => {
 					day: doc.data().day,
 					dayOfWeek: doc.data().dayOfWeek,
 					weather: doc.data().weather,
-					text: doc.data().text.replace(/<br\s*\/?>/gm, '\n'),
+					text: doc.data().text,
 				});
 			});
 		})
@@ -96,11 +92,31 @@ export const getMonthDiaries = uid => dispatch => {
 		);
 };
 
+export const getYearList = uid => dispatch => {
+	const yearList = [];
+	firebase
+		.firestore()
+		.collection(uid)
+		.get()
+		.then(docs => {
+			docs.forEach(doc => {
+				yearList.push(doc.data().year);
+			});
+		})
+		.then(() =>
+			dispatch({
+				type: GET_YEAR_LIST,
+				payload: yearList,
+			})
+		);
+};
+
 const initialState = {
 	input: '',
 	weather: '',
-	monthDiaries: [],
 	uploaded: false,
+	monthDiaries: [],
+	yearList: [],
 };
 
 export const authReducer = (state = initialState, action) => {
@@ -137,6 +153,12 @@ export const authReducer = (state = initialState, action) => {
 			return {
 				...state,
 				monthDiaries: action.payload,
+			};
+		case GET_YEAR_LIST:
+			const yearList = Array.from(new Set(action.payload));
+			return {
+				...state,
+				yearList,
 			};
 		default:
 			return state;
