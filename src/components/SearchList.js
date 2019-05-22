@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import YearItem from './YearItem';
+import MonthItem from '../components/MonthItem';
 
 const Box = styled.div`
 	width: 1024px;
@@ -19,24 +19,16 @@ const Container = styled.ul`
 	width: 100%;
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
-	grid-gap: 100px;
+	grid-gap: 20px;
 `;
 
-const YearList = ({ yearList, onGetMonthList, toggle, onSetToggle }) => (
+const SearchList = ({ match, searchList }) => (
 	<Box>
-		<Title>일기장 목록</Title>
+		<Title>{`${match.params.year}년 ${match.params.month}월 일기`}</Title>
 		<Container>
-			{yearList.map(year => (
-				<YearItem
-					key={year}
-					year={year}
-					onGetMonthList={onGetMonthList}
-					toggle={toggle}
-					onSetToggle={onSetToggle}
-				/>
-			))}
+			{searchList.lenth !== 0 && searchList.map(diary => <MonthItem key={diary.id} diary={diary} />)}
 		</Container>
 	</Box>
 );
 
-export default YearList;
+export default SearchList;

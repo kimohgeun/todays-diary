@@ -8,6 +8,7 @@ import Login from '../containers/LoginCon';
 import Header from '../containers/HeaderCon';
 import MonthList from '../containers/MonthListCon';
 import YearList from '../containers/YearListCon';
+import SearchList from '../containers/SearchListCon';
 
 const Router = ({ getAuth, loading, isAuthenticated }) => {
 	useEffect(() => {
@@ -28,6 +29,7 @@ const Router = ({ getAuth, loading, isAuthenticated }) => {
 					<Switch>
 						<Route exact path="/" component={MonthList} />
 						<Route path="/year_list" component={YearList} />
+						<Route path="/:year/:month" component={SearchList} />
 						<Redirect from="*" to="/" />
 					</Switch>
 				</>

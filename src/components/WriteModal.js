@@ -59,7 +59,7 @@ const WeatherContainer = styled.div`
 `;
 
 const WeatherIcon = styled.i`
-	color: ${props => (props.weather ? '#3498db' : '#BDBDBD')};
+	color: ${props => (props.weather ? '#424242' : '#e0e0e0')};
 	cursor: pointer;
 `;
 
@@ -81,8 +81,9 @@ const Textarea = styled.textarea`
 
 const ClockIcon = styled.i`
 	cursor: pointer;
+	color: #bdbdbd;
 	&:hover {
-		color: #3498db;
+		color: #424242;
 	}
 	transition: color 0.1s linear;
 `;
@@ -104,7 +105,7 @@ const CancelIcon = styled.i`
 const SaveButton = styled.button`
 	all: unset;
 	font-size: 0.8rem;
-	background-color: ${props => (props.active & !props.uploaded ? '#3498db' : '#bdbdbd')};
+	background-color: ${props => (props.active & !props.uploaded ? '#424242' : '#bdbdbd')};
 	color: #fff;
 	padding: 5px 10px;
 	border-radius: 5px;

@@ -12,6 +12,7 @@ import dragon from '../assets/dragon.png';
 import snake from '../assets/snake.png';
 import horse from '../assets/horse.png';
 import sheep from '../assets/sheep.png';
+import MonthListModal from '../containers/MonthListModalCon';
 
 const yearOfAnimal = [monkey, chicken, dog, pig, mouse, cow, tiger, rabbit, dragon, snake, horse, sheep];
 
@@ -83,11 +84,18 @@ const Icon = styled.i`
 	cursor: pointer;
 `;
 
-const YearItem = ({ year }) => (
+const YearItem = ({ year, onGetMonthList, toggle, onSetToggle }) => (
 	<Container>
+		<MonthListModal year={year} toggle={toggle} onSetToggle={onSetToggle} />
 		<Top>
 			<Year>{year}</Year>
-			<AnimalImage animal={yearOfAnimal[parseInt(year) % 12]} />
+			<AnimalImage
+				animal={yearOfAnimal[parseInt(year) % 12]}
+				onClick={() => {
+					onGetMonthList(year);
+					onSetToggle();
+				}}
+			/>
 			<Text>오늘의 일기</Text>
 		</Top>
 		<Bottom>

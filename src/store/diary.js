@@ -7,6 +7,8 @@ const WRITE_DIARY = 'WRITE_DIARY';
 const INIT_STATE = 'INIT_STATE';
 const GET_MONTH_DIARIES = 'GET_MONTH_DIARIES';
 const GET_YEAR_LIST = 'GET_YEAR_LIST';
+const GET_MONTH_LIST = 'GET_MONTH_LIST';
+const GET_SEARCH_LIST = 'GET_SEARCH_LIST';
 
 export const changeInput = input => {
 	return {
@@ -106,17 +108,69 @@ export const getYearList = uid => dispatch => {
 		.then(() =>
 			dispatch({
 				type: GET_YEAR_LIST,
-				payload: yearList,
+				payload: Array.from(new Set(yearList)),
 			})
 		);
 };
 
-const initialState = {
+export const getMonthList = (uid, year) => dispatch => {
+	const monthList = [];
+	firebase
+		.firestore()
+		.collection(uid)
+		.where('year', '==', year)
+		.get()
+		.then(docs => {
+			docs.forEach(doc => {
+				monthList.push(doc.data().month);
+			});
+		})
+		.then(() =>
+			dispatch({
+				type: GET_MONTH_LIST,
+				payload: Array.from(new Set(monthList)),
+			})
+		);
+};
+
+export const getSearchList = (uid, year, month) => dispatch => {
+	const searchList = [];
+	const monthStr = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+	firebase
+		.firestore()
+		.collection(uid)
+		.where('year', '==', year)
+		.where('month', '==', monthStr[month - 1])
+		.get()
+		.then(docs => {
+			docs.forEach(doc => {
+				searchList.push({
+					id: doc.data().id,
+					year: doc.data().year,
+					month: doc.data().month,
+					day: doc.data().day,
+					dayOfWeek: doc.data().dayOfWeek,
+					weather: doc.data().weather,
+					text: doc.data().text,
+				});
+			});
+		})
+		.then(() =>
+			dispatch({
+				type: GET_SEARCH_LIST,
+				payload: searchList,
+			})
+		);
+};
+
+export const initialState = {
 	input: '',
 	weather: '',
 	uploaded: false,
 	monthDiaries: [],
 	yearList: [],
+	monthList: [],
+	searchList: [],
 };
 
 export const authReducer = (state = initialState, action) => {
@@ -141,6 +195,7 @@ export const authReducer = (state = initialState, action) => {
 				...state,
 				monthDiaries: state.monthDiaries.concat(action.payload.data),
 				uploaded: action.payload.uploaded,
+				yearList: Array.from(new Set(state.yearList.concat(action.payload.data.year))),
 			};
 		case INIT_STATE:
 			return {
@@ -155,10 +210,19 @@ export const authReducer = (state = initialState, action) => {
 				monthDiaries: action.payload,
 			};
 		case GET_YEAR_LIST:
-			const yearList = Array.from(new Set(action.payload));
 			return {
 				...state,
-				yearList,
+				yearList: action.payload,
+			};
+		case GET_MONTH_LIST:
+			return {
+				...state,
+				monthList: action.payload,
+			};
+		case GET_SEARCH_LIST:
+			return {
+				...state,
+				searchList: action.payload,
 			};
 		default:
 			return state;
