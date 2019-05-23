@@ -1,26 +1,26 @@
 import React, { useEffect } from 'react';
 import SearchList from '../components/SearchList';
 import { connect } from 'react-redux';
-import { getSearchList } from '../store/diary';
+import { getSearchList, initState } from '../store/diary';
 
-const SearchListCon = ({ match, user, getSearchList, searchList }) => {
+const SearchListCon = ({ match, user, getSearchList, searchList, loading, initState }) => {
 	const year = match.params.year;
 	const month = match.params.month;
-
 	useEffect(() => {
 		getSearchList(user.uid, year, month);
+		initState();
 	}, []);
 
-	console.log(searchList);
-	return <SearchList match={match} searchList={searchList} />;
+	return <SearchList match={match} searchList={searchList} loading={loading} />;
 };
 
 const mapStateToProps = state => ({
 	user: state.auth.user,
-	searchList: state.diary.searchList
+	searchList: state.diary.searchList,
+	loading: state.diary.loading.getSearchList,
 });
 
 export default connect(
 	mapStateToProps,
-	{ getSearchList }
+	{ getSearchList, initState }
 )(SearchListCon);

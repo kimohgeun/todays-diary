@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import MonthItem from '../components/MonthItem';
+import Loading from '../components/Loading';
 
 const Box = styled.div`
 	width: 1024px;
@@ -22,12 +23,20 @@ const Container = styled.ul`
 	grid-gap: 20px;
 `;
 
-const SearchList = ({ match, searchList }) => (
+const SearchList = ({ match, searchList, loading }) => (
 	<Box>
-		<Title>{`${match.params.year}년 ${match.params.month}월 일기`}</Title>
-		<Container>
-			{searchList.lenth !== 0 && searchList.map(diary => <MonthItem key={diary.id} diary={diary} />)}
-		</Container>
+		{loading ? (
+			<Loading />
+		) : (
+			<>
+				<Title>{`${match.params.year}년 ${match.params.month}월 일기`}</Title>
+				<Container>
+					{searchList.length === 0
+						? '찾을 수 없습니다.'
+						: searchList.map(diary => <MonthItem key={diary.id} diary={diary} />)}
+				</Container>
+			</>
+		)}
 	</Box>
 );
 

@@ -25,8 +25,9 @@ const LeftContainer = styled.div`
 `;
 
 const Day = styled.span`
-	font-size: 1.5rem;
+	font-size: 1.2rem;
 	font-weight: 700;
+	padding: 5px;
 	color: ${props => {
 		if (props.color === 'SAT') {
 			return '#3498db';

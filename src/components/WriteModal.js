@@ -149,7 +149,7 @@ const WriteModal = ({
 		{loading && <Loading />}
 		<Form onSubmit={onSubmit}>
 			<Container>
-				<Date>{`${date.dayOfWeek}. ${date.month} ${date.day} / ${date.year}`}</Date>
+				<Date>{`${date.year}년 ${date.month}월 ${date.day}일 ${date.dayOfWeek}요일`}</Date>
 				<WeatherContainer>
 					<WeatherIcon
 						className="fas fa-sun"

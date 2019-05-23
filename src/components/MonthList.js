@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import MonthItem from '../components/MonthItem';
+import Loading from '../components/Loading';
+import Null from '../components/Null';
 
 const Box = styled.div`
 	width: 1024px;
@@ -22,12 +24,24 @@ const Container = styled.ul`
 	grid-gap: 20px;
 `;
 
-const MonthList = ({ month, monthDiaries }) => (
+const MonthList = ({ month, monthDiaries, loading }) => (
 	<Box>
 		<Title>{month}월의 일기</Title>
-		<Container>
-			{monthDiaries.lenth !== 0 && monthDiaries.map(diary => <MonthItem key={diary.id} diary={diary} />)}
-		</Container>
+		{loading ? (
+			<Loading />
+		) : (
+			<>
+				{monthDiaries.length === 0 ? (
+					<Null />
+				) : (
+					<Container>
+						{monthDiaries.map(diary => (
+							<MonthItem key={diary.id} diary={diary} />
+						))}
+					</Container>
+				)}
+			</>
+		)}
 	</Box>
 );
 

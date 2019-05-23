@@ -29,7 +29,7 @@ const Router = ({ getAuth, loading, isAuthenticated }) => {
 					<Switch>
 						<Route exact path="/" component={MonthList} />
 						<Route path="/year_list" component={YearList} />
-						<Route path="/:year/:month" component={SearchList} />
+						<Route exact path="/:year/:month" component={SearchList} />
 						<Redirect from="*" to="/" />
 					</Switch>
 				</>

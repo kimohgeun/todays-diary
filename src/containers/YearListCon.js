@@ -1,35 +1,23 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import YearList from '../components/YearList';
 import { connect } from 'react-redux';
-import { getYearList, getMonthList } from '../store/diary';
+import { getYearList } from '../store/diary';
 
-const YearListCon = ({ user, getYearList, yearList, getMonthList }) => {
-	const [toggle, setToggle] = useState(false);
-
-	// 모달 토글
-	const onSetToggle = () => {
-		setToggle(!toggle);
-	};
-
-	const onGetMonthList = year => {
-		getMonthList(user.uid, year);
-	};
-
+const YearListCon = ({ user, getYearList, yearList, loading }) => {
 	useEffect(() => {
 		getYearList(user.uid);
 	}, []);
 
-	return (
-		<YearList yearList={yearList} onGetMonthList={onGetMonthList} toggle={toggle} onSetToggle={onSetToggle} />
-	);
+	return <YearList yearList={yearList} loading={loading} />;
 };
 
 const mapStateToProps = state => ({
 	user: state.auth.user,
-	yearList: state.diary.yearList.sort(),
+	yearList: state.diary.yearList,
+	loading: state.diary.loading.getYearList,
 });
 
 export default connect(
 	mapStateToProps,
-	{ getYearList, getMonthList }
+	{ getYearList }
 )(YearListCon);

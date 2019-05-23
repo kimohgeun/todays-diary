@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import YearItem from './YearItem';
+import YearItem from '../containers/YearItemCon';
+import Loading from './Loading';
+import Null from './Null';
 
 const Box = styled.div`
 	width: 1024px;
@@ -22,20 +24,24 @@ const Container = styled.ul`
 	grid-gap: 100px;
 `;
 
-const YearList = ({ yearList, onGetMonthList, toggle, onSetToggle }) => (
+const YearList = ({ yearList, loading }) => (
 	<Box>
 		<Title>일기장 목록</Title>
-		<Container>
-			{yearList.map(year => (
-				<YearItem
-					key={year}
-					year={year}
-					onGetMonthList={onGetMonthList}
-					toggle={toggle}
-					onSetToggle={onSetToggle}
-				/>
-			))}
-		</Container>
+		{loading ? (
+			<Loading />
+		) : (
+			<>
+				{yearList.length === 0 ? (
+					<Null />
+				) : (
+					<Container>
+						{yearList.map(year => (
+							<YearItem key={year} year={year} />
+						))}
+					</Container>
+				)}
+			</>
+		)}
 	</Box>
 );
 

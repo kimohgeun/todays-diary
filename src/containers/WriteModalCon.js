@@ -22,12 +22,11 @@ const WriteModalCon = ({
 	const onSetDate = () => {
 		const date = new Date();
 		const year = date.getFullYear();
-		const month = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
 		const day = date.getDate();
-		const dayOfWeek = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+		const dayOfWeek = ['일', '월', '화', '수', '목', '금', '토'];
 		setDate({
 			year,
-			month: month[date.getMonth()],
+			month: date.getMonth() + 1,
 			day,
 			dayOfWeek: dayOfWeek[date.getDay()],
 		});

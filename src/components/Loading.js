@@ -19,6 +19,7 @@ const Box = styled.div`
 	background-color: rgba(255, 255, 255, 0);
 	position: absolute;
 	top: 0;
+	left: 0;
 	z-index: 1;
 `;
 
