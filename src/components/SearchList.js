@@ -1,7 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
-import MonthItem from '../components/MonthItem';
-import Loading from '../components/Loading';
+import Loading from './Loading';
+import Null from './Null';
+import MonthItem from '../containers/MonthItemCon';
+import ReadDiary from '../containers/ReadDiaryCon';
 
 const Box = styled.div`
 	width: 1024px;
@@ -29,12 +31,17 @@ const SearchList = ({ match, searchList, loading }) => (
 			<Loading />
 		) : (
 			<>
+				<ReadDiary />
 				<Title>{`${match.params.year}년 ${match.params.month}월 일기`}</Title>
-				<Container>
-					{searchList.length === 0
-						? '찾을 수 없습니다.'
-						: searchList.map(diary => <MonthItem key={diary.id} diary={diary} />)}
-				</Container>
+				{searchList.length === 0 ? (
+					<Null icon="fas fa-search" text="검색 결과를 찾을 수 없습니다." />
+				) : (
+					<Container>
+						{searchList.map(diary => (
+							<MonthItem key={diary.id} diary={diary} />
+						))}
+					</Container>
+				)}
 			</>
 		)}
 	</Box>

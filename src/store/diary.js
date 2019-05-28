@@ -1,14 +1,18 @@
 import firebase from '../config/firebase';
+import { changeMonthList, changeYearList, changeDayDiary, changeSearchList, changeUploading } from './loading';
 
 const CHANGE_INPUT = 'CHANGE_INPUT';
 const CHOOSE_WEATHER = 'CHOOSE_WEATHER';
 const ADD_TIME = 'ADD_TIME';
 const WRITE_DIARY = 'WRITE_DIARY';
 const INIT_STATE = 'INIT_STATE';
-const GET_MONTH_DIARIES = 'GET_MONTH_DIARIES';
+const GET_MONTH_LIST = 'GET_MONTH_LIST';
 const GET_YEAR_LIST = 'GET_YEAR_LIST';
 const GET_SEARCH_LIST = 'GET_SEARCH_LIST';
+const GET_DAY_DIARY = 'GET_DAY_DIARY';
+const UPDATE_DIARY = 'UPDATE_DIARY';
 
+// input 상태 변경
 export const changeInput = input => {
 	return {
 		type: CHANGE_INPUT,
@@ -16,6 +20,7 @@ export const changeInput = input => {
 	};
 };
 
+// 날씨 선택
 export const chooseWeather = weather => {
 	return {
 		type: CHOOSE_WEATHER,
@@ -23,6 +28,7 @@ export const chooseWeather = weather => {
 	};
 };
 
+// 시간 추가
 export const addTime = () => {
 	const date = new Date();
 	let hour = date.getHours();
@@ -41,30 +47,32 @@ export const addTime = () => {
 	};
 };
 
+// 새 일기 작성
 export const writeDiary = (uid, data) => dispatch => {
 	firebase
 		.firestore()
 		.collection(uid)
-		.add(data)
+		.doc(`${data.year}-${data.month}-${data.day}`)
+		.set(data)
 		.then(() =>
 			dispatch({
 				type: WRITE_DIARY,
-				payload: {
-					data: data,
-					uploaded: true,
-				},
+				payload: data,
 			})
-		);
+		)
+		.then(() => dispatch(changeUploading()));
 };
 
+// 상태 초기화
 export const initState = () => {
 	return {
 		type: INIT_STATE,
 	};
 };
 
-export const getMonthDiaries = uid => dispatch => {
-	const monthDiaries = [];
+// 이번달 일기 리스트 가져오기
+export const getMonthList = uid => dispatch => {
+	const monthList = [];
 	const date = new Date();
 	const month = date.getMonth() + 1;
 	firebase
@@ -74,8 +82,8 @@ export const getMonthDiaries = uid => dispatch => {
 		.get()
 		.then(docs => {
 			docs.forEach(doc => {
-				monthDiaries.push({
-					id: doc.data().id,
+				monthList.push({
+					id: doc.id,
 					year: doc.data().year,
 					month: doc.data().month,
 					day: doc.data().day,
@@ -87,12 +95,14 @@ export const getMonthDiaries = uid => dispatch => {
 		})
 		.then(() =>
 			dispatch({
-				type: GET_MONTH_DIARIES,
-				payload: monthDiaries,
+				type: GET_MONTH_LIST,
+				payload: monthList,
 			})
-		);
+		)
+		.then(() => dispatch(changeMonthList()));
 };
 
+// 연도별 리스트 가져오기
 export const getYearList = uid => dispatch => {
 	const yearList = [];
 	firebase
@@ -109,9 +119,11 @@ export const getYearList = uid => dispatch => {
 				type: GET_YEAR_LIST,
 				payload: Array.from(new Set(yearList)),
 			})
-		);
+		)
+		.then(() => dispatch(changeYearList()));
 };
 
+// 일기 검색
 export const getSearchList = (uid, year, month) => dispatch => {
 	const searchList = [];
 	firebase
@@ -123,7 +135,7 @@ export const getSearchList = (uid, year, month) => dispatch => {
 		.then(docs => {
 			docs.forEach(doc => {
 				searchList.push({
-					id: doc.data().id,
+					id: doc.id,
 					year: doc.data().year,
 					month: doc.data().month,
 					day: doc.data().day,
@@ -138,21 +150,71 @@ export const getSearchList = (uid, year, month) => dispatch => {
 				type: GET_SEARCH_LIST,
 				payload: searchList,
 			})
-		);
+		)
+		.then(() => dispatch(changeSearchList(false)));
+};
+
+// 작성된 일기 가져오기
+export const getDayDiary = (uid, year, month, day) => dispatch => {
+	const dayDiary = [];
+	firebase
+		.firestore()
+		.collection(uid)
+		.where('year', '==', year)
+		.where('month', '==', month)
+		.where('day', '==', day)
+		.get()
+		.then(docs => {
+			docs.forEach(doc => {
+				dayDiary.push({
+					id: doc.id,
+					year: doc.data().year,
+					month: doc.data().month,
+					day: doc.data().day,
+					dayOfWeek: doc.data().dayOfWeek,
+					weather: doc.data().weather,
+					text: doc.data().text,
+				});
+			});
+		})
+		.then(() =>
+			dispatch({
+				type: GET_DAY_DIARY,
+				payload: dayDiary,
+			})
+		)
+		.then(() => dispatch(changeDayDiary()));
+};
+
+// 일기 수정하기
+export const updateDiary = (uid, data) => dispatch => {
+	firebase
+		.firestore()
+		.collection(uid)
+		.doc(data.id)
+		.set(data)
+		.then(() =>
+			dispatch({
+				type: UPDATE_DIARY,
+				payload: {
+					id: data.id,
+					data: data,
+					uploaded: true,
+				},
+			})
+		)
+		.then(() => dispatch(changeUploading()));
 };
 
 export const initialState = {
 	input: '',
 	weather: '',
 	uploaded: false,
-	monthDiaries: [],
+	updated: false,
+	monthList: [],
 	yearList: [],
 	searchList: [],
-	loading: {
-		getMonthDiaries: true,
-		getYearList: true,
-		getSearchList: true,
-	},
+	dayDiary: [],
 };
 
 export const authReducer = (state = initialState, action) => {
@@ -175,9 +237,9 @@ export const authReducer = (state = initialState, action) => {
 		case WRITE_DIARY:
 			return {
 				...state,
-				monthDiaries: state.monthDiaries.concat(action.payload.data),
-				uploaded: action.payload.uploaded,
-				yearList: Array.from(new Set(state.yearList.concat(action.payload.data.year))),
+				monthList: state.monthList.concat(action.payload),
+				uploaded: true,
+				yearList: Array.from(new Set(state.yearList.concat(action.payload.year))),
 			};
 		case INIT_STATE:
 			return {
@@ -185,19 +247,16 @@ export const authReducer = (state = initialState, action) => {
 				input: '',
 				weather: '',
 				uploaded: false,
-				loading: {
-					...state.loading,
-					getMonthList: true,
-				},
-				monthList: [],
+				updated: false,
+				dayDiary: [],
 			};
-		case GET_MONTH_DIARIES:
+		case GET_MONTH_LIST:
 			return {
 				...state,
-				monthDiaries: action.payload,
+				monthList: action.payload,
 				loading: {
 					...state.loading,
-					getMonthDiaries: false,
+					getMonthList: false,
 				},
 			};
 		case GET_YEAR_LIST:
@@ -217,6 +276,23 @@ export const authReducer = (state = initialState, action) => {
 					...state.loading,
 					getSearchList: false,
 				},
+			};
+		case GET_DAY_DIARY:
+			return {
+				...state,
+				input: action.payload[0].text.replace(/<br\s*\/?>/gm, '\n'),
+				weather: action.payload[0].weather,
+				dayDiary: action.payload,
+				loading: {
+					...state.loading,
+					getDayDiary: false,
+				},
+			};
+		case UPDATE_DIARY:
+			return {
+				...state,
+				monthList: state.monthList.map(item => (action.payload.id === item.id ? action.payload.data : item)),
+				updated: true,
 			};
 		default:
 			return state;

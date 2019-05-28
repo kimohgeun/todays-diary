@@ -36,7 +36,7 @@ const Icon = styled.i`
 	}
 `;
 
-const Header = withRouter(({ location: { pathname }, onLogout, toggle, onSetToggle }) => (
+const Header = withRouter(({ location: { pathname }, onLogout, onToggle }) => (
 	<>
 		<Box>
 			<Title>오늘의 일기</Title>
@@ -47,21 +47,20 @@ const Header = withRouter(({ location: { pathname }, onLogout, toggle, onSetTogg
 				<Link to="/year_list">
 					<Icon className="fas fa-calendar-day" pathname={pathname === '/year_list'} />
 				</Link>
-				<Icon className="fas fa-pencil-alt" onClick={onSetToggle} />
+				<Icon className="fas fa-pencil-alt" onClick={onToggle} />
 				<Link to="/setting">
 					<Icon className="fas fa-cog" pathname={pathname === '/setting'} />
 				</Link>
 				<Icon className="fas fa-sign-out-alt" onClick={onLogout} />
 			</Container>
 		</Box>
-		<WriteModal toggle={toggle} onSetToggle={onSetToggle} />
+		<WriteModal />
 	</>
 ));
 
 Header.propTypes = {
 	onLogout: PropTypes.func,
-	toggle: PropTypes.bool,
-	onSetToggle: PropTypes.func,
+	onToggle: PropTypes.func,
 };
 
 export default Header;

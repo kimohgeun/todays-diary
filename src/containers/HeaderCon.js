@@ -1,40 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Header from '../components/Header';
 import { connect } from 'react-redux';
 import { logout } from '../store/auth';
-import { initState } from '../store/diary';
+import { changeWriteToggle } from '../store/toggle';
 
-const HeaderCon = ({ logout, uploaded, initState }) => {
-	const [toggle, setToggle] = useState(false);
-
-	// 모달 토글
-	const onSetToggle = () => {
-		setToggle(!toggle);
-		initState();
-	};
-
-	useEffect(() => {
-		if (uploaded) {
-			setTimeout(() => {
-				initState();
-				onSetToggle();
-			}, 3000);
-		}
-	}, [uploaded]);
-
+const HeaderCon = ({ logout, changeWriteToggle }) => {
 	// 로그아웃
 	const onLogout = () => {
 		logout();
 	};
-
-	return <Header onLogout={onLogout} toggle={toggle} onSetToggle={onSetToggle} />;
+	// 모달 토글
+	const onToggle = () => {
+		changeWriteToggle();
+	};
+	return <Header onLogout={onLogout} onToggle={onToggle} />;
 };
 
-const mapStateToProps = state => ({
-	uploaded: state.diary.uploaded,
-});
-
 export default connect(
-	mapStateToProps,
-	{ logout, initState }
+	null,
+	{ logout, changeWriteToggle }
 )(HeaderCon);

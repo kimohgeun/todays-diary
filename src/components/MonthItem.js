@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const Container = styled.li`
 	height: 150px;
@@ -71,8 +72,8 @@ const RightContainer = styled.div`
 	line-height: 110px;
 `;
 
-const MonthItem = ({ diary }) => (
-	<Container>
+const MonthItem = ({ diary, onToggle }) => (
+	<Container onClick={onToggle}>
 		<LeftContainer>
 			<Day color={diary.dayOfWeek}>{diary.day}</Day>
 			<DayOfWeek color={diary.dayOfWeek}>{diary.dayOfWeek}</DayOfWeek>
@@ -81,5 +82,10 @@ const MonthItem = ({ diary }) => (
 		<RightContainer>{diary.text.replace(/<br\s*\/?>/gm, '\n')}</RightContainer>
 	</Container>
 );
+
+MonthItem.propTypes = {
+	diary: PropTypes.object,
+	onToggle: PropTypes.func,
+};
 
 export default MonthItem;

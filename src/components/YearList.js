@@ -32,7 +32,7 @@ const YearList = ({ yearList, loading }) => (
 		) : (
 			<>
 				{yearList.length === 0 ? (
-					<Null />
+					<Null icon="fas fa-book" text="아직 작성된 일기장이 없습니다."/>
 				) : (
 					<Container>
 						{yearList.map(year => (

@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { connect } from 'react-redux';
 import YearItem from '../components/YearItem';
+import { connect } from 'react-redux';
+import { changeSearchList } from '../store/loading';
 import firebase from '../config/firebase';
 
-const YearItemCon = ({ user, year }) => {
+const YearItemCon = ({ user, year, changeSearchList }) => {
 	const [monthList, setMonthList] = useState([]);
 
+	// 연도별 작성된 달 가져오기
 	const getMonthList = (uid, year) => {
 		const list = [];
 		firebase
@@ -25,11 +27,19 @@ const YearItemCon = ({ user, year }) => {
 		getMonthList(user.uid, year);
 	}, []);
 
-	return <YearItem year={year} monthList={monthList} />;
+	// 일기 검색 로딩 상태로 바꾸기
+	const onLoading = () => {
+		changeSearchList(true);
+	};
+
+	return <YearItem year={year} monthList={monthList} onLoading={onLoading} />;
 };
 
 const mapStateToProps = state => ({
 	user: state.auth.user,
 });
 
-export default connect(mapStateToProps)(YearItemCon);
+export default connect(
+	mapStateToProps,
+	{ changeSearchList }
+)(YearItemCon);

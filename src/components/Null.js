@@ -15,10 +15,12 @@ const Emoticon = styled.span`
 	margin: 50px;
 `;
 
-const Null = () => (
+const Null = ({ icon, text }) => (
 	<Container>
-		<Emoticon>ʕ•ﻌ•ʔ</Emoticon>
-		<span>아직 작성된 일기가 없습니다.</span>
+		<Emoticon>
+			<i className={icon} />
+		</Emoticon>
+		<span>{text}</span>
 	</Container>
 );
 

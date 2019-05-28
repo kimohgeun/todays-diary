@@ -1,7 +1,6 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
-import PropTypes from 'prop-types';
-import Loading from '../components/Loading';
+import Loading from './Loading';
 
 const fade = keyframes`
 	from {
@@ -106,12 +105,12 @@ const CancelIcon = styled.i`
 const SaveButton = styled.button`
 	all: unset;
 	font-size: 0.8rem;
-	background-color: ${props => (props.active & !props.uploaded ? '#424242' : '#bdbdbd')};
+	background-color: ${props => (props.active & !props.updated ? '#424242' : '#bdbdbd')};
 	color: #fff;
 	padding: 5px 10px;
 	border-radius: 5px;
 	margin: 10px 0;
-	cursor: ${props => (props.active & !props.uploaded ? 'pointer' : 'not-allowed')};
+	cursor: ${props => (props.active & !props.updated ? 'pointer' : 'not-allowed')};
 `;
 
 const Mark = styled.div`
@@ -120,7 +119,7 @@ const Mark = styled.div`
 	border-radius: 50%;
 	border: 3px solid #673ab7;
 	font-size: 0.7rem;
-	display: ${props => (props.uploaded ? 'flex' : 'none')};
+	display: ${props => (props.updated ? 'flex' : 'none')};
 	justify-content: center;
 	align-items: center;
 	color: #673ab7;
@@ -132,10 +131,12 @@ const Mark = styled.div`
 	animation: ${fade} 2s linear;
 `;
 
-const WriteModal = ({
+const ReadDiary = ({
+	active,
 	toggle,
 	onToggle,
-	date,
+	loading,
+	dayDiary,
 	weather,
 	onChooseWeather,
 	input,
@@ -143,14 +144,20 @@ const WriteModal = ({
 	onAddTime,
 	onSubmit,
 	uploading,
-	uploaded,
+	updated,
 }) => (
 	<Box toggle={toggle}>
 		<CancelIcon className="fas fa-times" onClick={onToggle} />
+		{loading && <Loading />}
 		{uploading && <Loading />}
 		<Form onSubmit={onSubmit}>
 			<Container>
-				<Date>{`${date.year}년 ${date.month}월 ${date.day}일 ${date.dayOfWeek}요일`}</Date>
+				<Date>
+					{dayDiary.length !== 0 &&
+						`${dayDiary[0].year}년 ${dayDiary[0].month}월 ${dayDiary[0].day}일 ${
+							dayDiary[0].dayOfWeek
+						}요일`}
+				</Date>
 				<WeatherContainer>
 					<WeatherIcon
 						className="fas fa-sun"
@@ -182,34 +189,15 @@ const WriteModal = ({
 			<Textarea id="write_textarea" value={input} onChange={onChange} />
 			<Container>
 				<ClockIcon className="fas fa-clock" onClick={onAddTime} />
-				<SaveButton
-					type="submit"
-					disabled={weather !== '' && input !== '' ? false : true}
-					active={weather !== '' && input !== '' ? true : false}
-					uploaded={uploaded}
-				>
-					작성하기
+				<SaveButton type="submit" disabled={!active} active={active} updated={updated}>
+					수정하기
 				</SaveButton>
+				<Mark updated={updated}>
+					<span>오늘의 일기!</span>
+				</Mark>
 			</Container>
-			<Mark uploaded={uploaded}>
-				<span>오늘의 일기!</span>
-			</Mark>
 		</Form>
 	</Box>
 );
 
-WriteModal.propTypes = {
-	toggle: PropTypes.bool,
-	onToggle: PropTypes.func,
-	date: PropTypes.object,
-	weather: PropTypes.string,
-	onChooseWeather: PropTypes.func,
-	input: PropTypes.string,
-	onChange: PropTypes.func,
-	onAddTime: PropTypes.func,
-	onSubmit: PropTypes.func,
-	uploading: PropTypes.bool,
-	uploaded: PropTypes.bool,
-};
-
-export default WriteModal;
+export default ReadDiary;

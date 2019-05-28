@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { getYearList } from '../store/diary';
 
 const YearListCon = ({ user, getYearList, yearList, loading }) => {
+	// 연도별 일기장 가져오기
 	useEffect(() => {
 		getYearList(user.uid);
 	}, []);
@@ -14,7 +15,7 @@ const YearListCon = ({ user, getYearList, yearList, loading }) => {
 const mapStateToProps = state => ({
 	user: state.auth.user,
 	yearList: state.diary.yearList,
-	loading: state.diary.loading.getYearList,
+	loading: state.loading.yearList,
 });
 
 export default connect(

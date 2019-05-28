@@ -3,9 +3,11 @@ import SearchList from '../components/SearchList';
 import { connect } from 'react-redux';
 import { getSearchList, initState } from '../store/diary';
 
-const SearchListCon = ({ match, user, getSearchList, searchList, loading, initState }) => {
+const SearchListCon = ({ match, user, searchList, loading, getSearchList, initState }) => {
 	const year = match.params.year;
 	const month = match.params.month;
+
+	// 검색한 일기 가져오기
 	useEffect(() => {
 		getSearchList(user.uid, year, month);
 		initState();
@@ -17,7 +19,7 @@ const SearchListCon = ({ match, user, getSearchList, searchList, loading, initSt
 const mapStateToProps = state => ({
 	user: state.auth.user,
 	searchList: state.diary.searchList,
-	loading: state.diary.loading.getSearchList,
+	loading: state.loading.searchList,
 });
 
 export default connect(
