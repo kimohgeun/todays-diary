@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import { Link, withRouter } from 'react-router-dom';
 import WriteModal from '../containers/WriteModalCon';
+import Notification from './Notification';
 
 const Box = styled.div`
 	width: 100%;
@@ -36,26 +37,25 @@ const Icon = styled.i`
 	}
 `;
 
-const Header = withRouter(({ location: { pathname }, onLogout, onToggle }) => (
-	<>
-		<Box>
-			<Title>오늘의 일기</Title>
-			<Container>
-				<Link to="/">
-					<Icon className="fas fa-list" pathname={pathname === '/'} />
-				</Link>
-				<Link to="/year_list">
-					<Icon className="fas fa-calendar-day" pathname={pathname === '/year_list'} />
-				</Link>
-				<Icon className="fas fa-pencil-alt" onClick={onToggle} />
-				<Link to="/setting">
-					<Icon className="fas fa-cog" pathname={pathname === '/setting'} />
-				</Link>
-				<Icon className="fas fa-sign-out-alt" onClick={onLogout} />
-			</Container>
-		</Box>
+const Header = withRouter(({ location: { pathname }, onLogout, onToggle, toggle }) => (
+	<Box>
+		<Notification toggle={toggle} />
 		<WriteModal />
-	</>
+		<Title>오늘의 일기</Title>
+		<Container>
+			<Link to="/">
+				<Icon className="fas fa-list" pathname={pathname === '/'} />
+			</Link>
+			<Link to="/year_list">
+				<Icon className="fas fa-calendar-day" pathname={pathname === '/year_list'} />
+			</Link>
+			<Icon className="fas fa-pencil-alt" onClick={onToggle} />
+			<Link to="/setting">
+				<Icon className="fas fa-cog" pathname={pathname === '/setting'} />
+			</Link>
+			<Icon className="fas fa-sign-out-alt" onClick={onLogout} />
+		</Container>
+	</Box>
 ));
 
 Header.propTypes = {

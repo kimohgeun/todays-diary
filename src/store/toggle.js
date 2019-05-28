@@ -1,5 +1,6 @@
 const CHANGE_WRITE_TOGGLE = 'CHANGE_WRITE_TOGGLE';
 const CHANGE_READ_TOGGLE = 'CHANGE_READ_TOGGLE';
+const CHANGE_NOTIFICATION_TOGGLE = 'CHANGE_NOTIFICATION_TOGGLE';
 
 export const changeWriteToggle = () => {
 	return {
@@ -13,9 +14,16 @@ export const changeReadToggle = () => {
 	};
 };
 
+export const changeNotificationToggle = () => {
+	return {
+		type: CHANGE_NOTIFICATION_TOGGLE,
+	};
+};
+
 export const initialState = {
 	writeToggle: false,
 	readToggle: false,
+	notificationToggle: false,
 };
 
 export const toggleReducer = (state = initialState, action) => {
@@ -29,6 +37,11 @@ export const toggleReducer = (state = initialState, action) => {
 			return {
 				...state,
 				readToggle: !state.readToggle,
+			};
+		case CHANGE_NOTIFICATION_TOGGLE:
+			return {
+				...state,
+				notificationToggle: !state.notificationToggle,
 			};
 		default:
 			return state;

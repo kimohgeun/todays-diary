@@ -235,9 +235,13 @@ export const authReducer = (state = initialState, action) => {
 				input: state.input + action.payload,
 			};
 		case WRITE_DIARY:
+			const data = action.payload;
 			return {
 				...state,
-				monthList: state.monthList.concat(action.payload),
+				monthList: state.monthList.concat({
+					id: `${data.year}-${data.month}-${data.day}`,
+					...data,
+				}),
 				uploaded: true,
 				yearList: Array.from(new Set(state.yearList.concat(action.payload.year))),
 			};
