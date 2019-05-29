@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import ReadDiary from '../components/ReadDiary';
 import { connect } from 'react-redux';
-import { changeReadToggle } from '../store/toggle';
+import { changeReadToggle, chnageDeleteToggle } from '../store/toggle';
 import { chooseWeather, changeInput, addTime, updateDiary, initState } from '../store/diary';
 import { changeUploading, changeDayDiary } from '../store/loading';
 
@@ -22,12 +22,18 @@ const ReadDiaryCon = ({
 	initState,
 	changeUploading,
 	changeDayDiary,
+	chnageDeleteToggle,
 }) => {
 	// 모달 토글
 	const onToggle = () => {
 		changeReadToggle();
 		changeDayDiary();
 		initState();
+	};
+
+	// 삭제 모달 토글
+	const onDeleteToggle = () => {
+		chnageDeleteToggle();
 	};
 
 	// 수정버튼 활성화
@@ -94,6 +100,7 @@ const ReadDiaryCon = ({
 			onSubmit={onSubmit}
 			uploading={uploading}
 			updated={updated}
+			onDeleteToggle={onDeleteToggle}
 		/>
 	);
 };
@@ -111,5 +118,15 @@ const mapStateToProps = state => ({
 
 export default connect(
 	mapStateToProps,
-	{ changeReadToggle, chooseWeather, changeInput, addTime, updateDiary, initState, changeUploading, changeDayDiary }
+	{
+		changeReadToggle,
+		chooseWeather,
+		changeInput,
+		addTime,
+		updateDiary,
+		initState,
+		changeUploading,
+		changeDayDiary,
+		chnageDeleteToggle,
+	}
 )(ReadDiaryCon);

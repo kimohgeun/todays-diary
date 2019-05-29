@@ -1,6 +1,7 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
 import Loading from './Loading';
+import DeleteModal from '../containers/DeleteModalCon';
 
 const fade = keyframes`
 	from {
@@ -88,6 +89,16 @@ const ClockIcon = styled.i`
 	transition: color 0.1s linear;
 `;
 
+const DeleteIcon = styled.i`
+	cursor: pointer;
+	color: #bdbdbd;
+	&:hover {
+		color: #424242;
+	}
+	transition: color 0.1s linear;
+	margin-left: 20px;
+`;
+
 const CancelIcon = styled.i`
 	font-size: 1.5rem;
 	color: #fff;
@@ -145,9 +156,11 @@ const ReadDiary = ({
 	onSubmit,
 	uploading,
 	updated,
+	onDeleteToggle,
 }) => (
 	<Box toggle={toggle}>
 		<CancelIcon className="fas fa-times" onClick={onToggle} />
+		<DeleteModal />
 		{loading && <Loading />}
 		{uploading && <Loading />}
 		<Form onSubmit={onSubmit}>
@@ -188,7 +201,10 @@ const ReadDiary = ({
 			</Container>
 			<Textarea id="write_textarea" value={input} onChange={onChange} />
 			<Container>
-				<ClockIcon className="fas fa-clock" onClick={onAddTime} />
+				<div>
+					<ClockIcon className="fas fa-clock" onClick={onAddTime} />
+					<DeleteIcon className="fas fa-trash" onClick={onDeleteToggle} />
+				</div>
 				<SaveButton type="submit" disabled={!active} active={active} updated={updated}>
 					수정하기
 				</SaveButton>

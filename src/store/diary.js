@@ -1,5 +1,12 @@
 import firebase from '../config/firebase';
-import { changeMonthList, changeYearList, changeDayDiary, changeSearchList, changeUploading } from './loading';
+import {
+	changeMonthList,
+	changeYearList,
+	changeDayDiary,
+	changeSearchList,
+	changeUploading,
+	changeDeleting,
+} from './loading';
 
 const CHANGE_INPUT = 'CHANGE_INPUT';
 const CHOOSE_WEATHER = 'CHOOSE_WEATHER';
@@ -11,6 +18,7 @@ const GET_YEAR_LIST = 'GET_YEAR_LIST';
 const GET_SEARCH_LIST = 'GET_SEARCH_LIST';
 const GET_DAY_DIARY = 'GET_DAY_DIARY';
 const UPDATE_DIARY = 'UPDATE_DIARY';
+const DELETE_DIARY = 'DELETE_DIARY';
 
 // input 상태 변경
 export const changeInput = input => {
@@ -206,11 +214,28 @@ export const updateDiary = (uid, data) => dispatch => {
 		.then(() => dispatch(changeUploading()));
 };
 
+// 일기 삭제하기
+export const deleteDiary = (uid, id) => dispatch => {
+	firebase
+		.firestore()
+		.collection(uid)
+		.doc(id)
+		.delete()
+		.then(() =>
+			dispatch({
+				type: DELETE_DIARY,
+				payload: id,
+			})
+		)
+		.then(() => dispatch(changeDeleting()));
+};
+
 export const initialState = {
 	input: '',
 	weather: '',
 	uploaded: false,
 	updated: false,
+	deleted: false,
 	monthList: [],
 	yearList: [],
 	searchList: [],
@@ -252,6 +277,7 @@ export const authReducer = (state = initialState, action) => {
 				weather: '',
 				uploaded: false,
 				updated: false,
+				deleted: false,
 				dayDiary: [],
 			};
 		case GET_MONTH_LIST:
@@ -296,7 +322,15 @@ export const authReducer = (state = initialState, action) => {
 			return {
 				...state,
 				monthList: state.monthList.map(item => (action.payload.id === item.id ? action.payload.data : item)),
+				searchList: state.searchList.map(item => (action.payload.id === item.id ? action.payload.data : item)),
 				updated: true,
+			};
+		case DELETE_DIARY:
+			return {
+				...state,
+				monthList: state.monthList.filter(item => action.payload.id === item.id),
+				searchList: state.searchList.filter(item => action.payload.id === item.id),
+				deleted: true,
 			};
 		default:
 			return state;

@@ -3,6 +3,7 @@ const CHANGE_YEAR_LIST = 'CHANGE_YEAR_LIST';
 const CHANGE_DAY_DIARY = 'CHANGE_DAY_DIARY';
 const CHANGE_SEARCH_LIST = 'CHANGE_SEARCH_LIST';
 const CHANGE_UPLOADING = 'CHANGE_UPLOADING';
+const CHANGE_DELETING = 'CHANGE_DELETING';
 
 export const changeMonthList = () => {
 	return {
@@ -35,12 +36,19 @@ export const changeUploading = () => {
 	};
 };
 
+export const changeDeleting = () => {
+	return {
+		type: CHANGE_DELETING,
+	};
+};
+
 export const initialState = {
 	monthList: true,
 	yearList: true,
 	dayDiary: true,
 	searchList: true,
 	uploading: false,
+	deleting: false,
 };
 
 export const loadingReducer = (state = initialState, action) => {
@@ -69,6 +77,11 @@ export const loadingReducer = (state = initialState, action) => {
 			return {
 				...state,
 				uploading: !state.uploading,
+			};
+		case CHANGE_DELETING:
+			return {
+				...state,
+				deleting: !state.deleting,
 			};
 		default:
 			return state;
