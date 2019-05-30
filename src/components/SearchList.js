@@ -14,8 +14,8 @@ const Box = styled.div`
 const Title = styled.span`
 	font-weight: 700;
 	display: block;
-	text-align: center;
-	margin: 30px 0;
+	margin: 50px 0;
+	font-size: 0.9rem;
 `;
 
 const Container = styled.ul`

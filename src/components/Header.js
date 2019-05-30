@@ -41,7 +41,9 @@ const Header = withRouter(({ location: { pathname }, onLogout, onToggle, toggle 
 	<Box>
 		<Notification toggle={toggle} />
 		<WriteModal />
-		<Title>오늘의 일기</Title>
+		<Title>
+			<Link to="/">오늘의 일기</Link>
+		</Title>
 		<Container>
 			<Link to="/">
 				<Icon className="fas fa-list" pathname={pathname === '/'} />

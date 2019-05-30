@@ -13,8 +13,8 @@ const Box = styled.div`
 const Title = styled.span`
 	font-weight: 700;
 	display: block;
-	text-align: center;
-	margin: 30px 0;
+	margin: 50px 0;
+	font-size: 0.9rem;
 `;
 
 const Container = styled.ul`
@@ -32,7 +32,7 @@ const YearList = ({ yearList, loading }) => (
 		) : (
 			<>
 				{yearList.length === 0 ? (
-					<Null icon="fas fa-book" text="아직 작성된 일기장이 없습니다."/>
+					<Null icon="fas fa-book" text="아직 작성된 일기장이 없습니다." />
 				) : (
 					<Container>
 						{yearList.map(year => (

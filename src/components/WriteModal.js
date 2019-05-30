@@ -15,7 +15,6 @@ const fade = keyframes`
 const Box = styled.div`
 	width: 100%;
 	height: 100vh;
-	background-color: #424242;
 	display: ${props => (props.toggle ? 'flex' : 'none')};
 	justify-content: center;
 	align-items: center;
@@ -25,6 +24,8 @@ const Box = styled.div`
 	left: 0px;
 	animation: ${fade} 0.3s linear;
 	z-index: 1;
+	background-color: ${props => props.color};
+	font-family: ${props => props.font};
 `;
 
 const Form = styled.form`
@@ -67,7 +68,6 @@ const WeatherIcon = styled.i`
 const Textarea = styled.textarea`
 	width: 400px;
 	height: 400px;
-	font-size: 0.8rem;
 	background-attachment: local;
 	background-image: linear-gradient(to right, white 10px, transparent 10px),
 		linear-gradient(to left, white 10px, transparent 10px),
@@ -78,6 +78,8 @@ const Textarea = styled.textarea`
 	outline: none;
 	resize: none;
 	overflow: none;
+	font-size: 0.8rem;
+	font-family: ${props => props.font};
 `;
 
 const ClockIcon = styled.i`
@@ -91,7 +93,7 @@ const ClockIcon = styled.i`
 
 const CancelIcon = styled.i`
 	font-size: 1.5rem;
-	color: #fff;
+	color: ${props => (props.color === '#fafafa' ? '#424242' : '#fafafa')};
 	margin: 10px 0;
 	&:hover {
 		transform: scale(1.2);
@@ -144,9 +146,11 @@ const WriteModal = ({
 	onSubmit,
 	uploading,
 	uploaded,
+	font,
+	color,
 }) => (
-	<Box toggle={toggle}>
-		<CancelIcon className="fas fa-times" onClick={onToggle} />
+	<Box toggle={toggle} font={font} color={color}>
+		<CancelIcon className="fas fa-times" onClick={onToggle} color={color} />
 		{uploading && <Loading />}
 		<Form onSubmit={onSubmit}>
 			<Container>
@@ -179,7 +183,7 @@ const WriteModal = ({
 					/>
 				</WeatherContainer>
 			</Container>
-			<Textarea id="write_textarea" value={input} onChange={onChange} />
+			<Textarea id="write_textarea" value={input} onChange={onChange} font={font} />
 			<Container>
 				<ClockIcon className="fas fa-clock" onClick={onAddTime} />
 				<SaveButton

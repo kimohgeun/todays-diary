@@ -15,7 +15,6 @@ const fade = keyframes`
 const Box = styled.div`
 	width: 100%;
 	height: 100vh;
-	background-color: #424242;
 	display: ${props => (props.toggle ? 'flex' : 'none')};
 	justify-content: center;
 	align-items: center;
@@ -25,6 +24,8 @@ const Box = styled.div`
 	left: 0px;
 	animation: ${fade} 0.3s linear;
 	z-index: 1;
+	background-color: ${props => props.color};
+	font-family: ${props => props.font};
 `;
 
 const Form = styled.form`
@@ -78,6 +79,7 @@ const Textarea = styled.textarea`
 	outline: none;
 	resize: none;
 	overflow: none;
+	font-family: ${props => props.font};
 `;
 
 const ClockIcon = styled.i`
@@ -101,7 +103,7 @@ const DeleteIcon = styled.i`
 
 const CancelIcon = styled.i`
 	font-size: 1.5rem;
-	color: #fff;
+	color: ${props => (props.color === '#fafafa' ? '#424242' : '#fafafa')};
 	margin: 10px 0;
 	&:hover {
 		transform: scale(1.2);
@@ -157,9 +159,11 @@ const ReadDiary = ({
 	uploading,
 	updated,
 	onDeleteToggle,
+	font,
+	color,
 }) => (
-	<Box toggle={toggle}>
-		<CancelIcon className="fas fa-times" onClick={onToggle} />
+	<Box toggle={toggle} font={font} color={color}>
+		<CancelIcon className="fas fa-times" onClick={onToggle} color={color} />
 		<DeleteModal />
 		{loading && <Loading />}
 		{uploading && <Loading />}
@@ -199,7 +203,7 @@ const ReadDiary = ({
 					/>
 				</WeatherContainer>
 			</Container>
-			<Textarea id="write_textarea" value={input} onChange={onChange} />
+			<Textarea id="write_textarea" value={input} onChange={onChange} font={font} />
 			<Container>
 				<div>
 					<ClockIcon className="fas fa-clock" onClick={onAddTime} />

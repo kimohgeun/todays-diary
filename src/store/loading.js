@@ -2,8 +2,10 @@ const CHANGE_MONTH_LIST = 'CHANGE_MONTH_LIST';
 const CHANGE_YEAR_LIST = 'CHANGE_YEAR_LIST';
 const CHANGE_DAY_DIARY = 'CHANGE_DAY_DIARY';
 const CHANGE_SEARCH_LIST = 'CHANGE_SEARCH_LIST';
+const CHANGE_SETTING = 'CHANGE_SETTING';
 const CHANGE_UPLOADING = 'CHANGE_UPLOADING';
 const CHANGE_DELETING = 'CHANGE_DELETING';
+
 
 export const changeMonthList = () => {
 	return {
@@ -42,11 +44,20 @@ export const changeDeleting = () => {
 	};
 };
 
+export const changeSetting = () => {
+	return {
+		type: CHANGE_SETTING,
+	};
+};
+
 export const initialState = {
+	// 데이터를 가져오는 로딩
 	monthList: true,
 	yearList: true,
 	dayDiary: true,
 	searchList: true,
+	setting: true,
+	// 데이터를 변경하는 로딩
 	uploading: false,
 	deleting: false,
 };
@@ -73,6 +84,11 @@ export const loadingReducer = (state = initialState, action) => {
 				...state,
 				searchList: action.payload,
 			};
+		case CHANGE_SETTING:
+			return {
+				...state,
+				setting: false,
+			};
 		case CHANGE_UPLOADING:
 			return {
 				...state,
@@ -83,6 +99,7 @@ export const loadingReducer = (state = initialState, action) => {
 				...state,
 				deleting: !state.deleting,
 			};
+
 		default:
 			return state;
 	}

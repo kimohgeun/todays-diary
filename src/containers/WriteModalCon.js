@@ -19,6 +19,8 @@ const WriteModalCon = ({
 	writeDiary,
 	initState,
 	changeUploading,
+	font,
+	color,
 }) => {
 	// 모달 토글
 	const onToggle = () => {
@@ -98,6 +100,8 @@ const WriteModalCon = ({
 			onSubmit={onSubmit}
 			uploading={uploading}
 			uploaded={uploaded}
+			font={font}
+			color={color}
 		/>
 	);
 };
@@ -109,6 +113,8 @@ const mapStateToProps = state => ({
 	input: state.diary.input,
 	uploading: state.loading.uploading,
 	uploaded: state.diary.uploaded,
+	font: state.setting.font,
+	color: state.setting.color,
 });
 
 export default connect(

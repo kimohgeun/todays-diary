@@ -12,6 +12,8 @@ const YearItemCon = ({ user, year, changeSearchList }) => {
 		const list = [];
 		firebase
 			.firestore()
+			.collection('diary')
+			.doc('uid')
 			.collection(uid)
 			.where('year', '==', year)
 			.get()

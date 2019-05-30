@@ -37,6 +37,7 @@ const Container = styled.li`
 	transition: transform 0.2s linear;
 	cursor: pointer;
 	font-family: 'Jua', sans-serif;
+	background-color: #fff;
 `;
 
 const Top = styled.div`
@@ -49,7 +50,6 @@ const Top = styled.div`
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	background-color: #eeeeee;
 `;
 
 const Year = styled.span`
@@ -88,7 +88,7 @@ const Bottom = styled.div`
 const Month = styled.span`
 	font-size: 0.8rem;
 	pointer-events: ${props => !props.active && 'none'};
-	color: ${props => (props.active ? '#424242' : '#E0E0E0')};
+	color: ${props => (props.active ? '#424242' : '#e0e0e0')};
 `;
 
 const Loading = styled.i`
@@ -97,7 +97,6 @@ const Loading = styled.i`
 
 const YearItem = ({ year, monthList, onLoading }) => (
 	<Container>
-		{console.log(monthList)}
 		<Top>
 			<Year>{year}</Year>
 			<AnimalImage animal={yearOfAnimal[parseInt(year) % 12]} />

@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { getAuth } from '../store/auth';
 import { getMonthList } from '../store/diary';
+import { getSetting } from '../store/setting';
 import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import Loading from '../components/Loading';
 import Login from '../containers/LoginCon';
@@ -9,8 +10,9 @@ import Header from '../containers/HeaderCon';
 import MonthList from '../containers/MonthListCon';
 import YearList from '../containers/YearListCon';
 import SearchList from '../containers/SearchListCon';
+import Setting from '../containers/SettingCon';
 
-const Router = ({ user, getAuth, authLoading, isAuthenticated, getMonthList, monthListLoading }) => {
+const Router = ({ user, getAuth, authLoading, isAuthenticated, getMonthList, getSetting, monthListLoading }) => {
 	// 인증 불러오기
 	useEffect(() => {
 		getAuth();
@@ -20,6 +22,7 @@ const Router = ({ user, getAuth, authLoading, isAuthenticated, getMonthList, mon
 	useEffect(() => {
 		if (isAuthenticated) {
 			getMonthList(user.uid);
+			getSetting(user.uid);
 		}
 	}, [isAuthenticated]);
 
@@ -40,6 +43,7 @@ const Router = ({ user, getAuth, authLoading, isAuthenticated, getMonthList, mon
 					<Switch>
 						<Route exact path="/" component={MonthList} />
 						<Route exact path="/year_list" component={YearList} />
+						<Route exact path="/setting" component={Setting} />
 						<Route exact path="/:year/:month" component={SearchList} />
 						<Redirect from="*" to="/" />
 					</Switch>
@@ -58,5 +62,5 @@ const mapStateToProps = state => ({
 
 export default connect(
 	mapStateToProps,
-	{ getAuth, getMonthList }
+	{ getAuth, getSetting, getMonthList }
 )(Router);

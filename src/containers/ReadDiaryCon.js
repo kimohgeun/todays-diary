@@ -23,6 +23,8 @@ const ReadDiaryCon = ({
 	changeUploading,
 	changeDayDiary,
 	chnageDeleteToggle,
+	font,
+	color,
 }) => {
 	// 모달 토글
 	const onToggle = () => {
@@ -101,6 +103,8 @@ const ReadDiaryCon = ({
 			uploading={uploading}
 			updated={updated}
 			onDeleteToggle={onDeleteToggle}
+			font={font}
+			color={color}
 		/>
 	);
 };
@@ -114,6 +118,8 @@ const mapStateToProps = state => ({
 	input: state.diary.input,
 	uploading: state.loading.uploading,
 	updated: state.diary.updated,
+	font: state.setting.font,
+	color: state.setting.color,
 });
 
 export default connect(

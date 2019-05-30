@@ -59,6 +59,8 @@ export const addTime = () => {
 export const writeDiary = (uid, data) => dispatch => {
 	firebase
 		.firestore()
+		.collection('diary')
+		.doc('uid')
 		.collection(uid)
 		.doc(`${data.year}-${data.month}-${data.day}`)
 		.set(data)
@@ -85,6 +87,8 @@ export const getMonthList = uid => dispatch => {
 	const month = date.getMonth() + 1;
 	firebase
 		.firestore()
+		.collection('diary')
+		.doc('uid')
 		.collection(uid)
 		.where('month', '==', month.toString())
 		.get()
@@ -115,6 +119,8 @@ export const getYearList = uid => dispatch => {
 	const yearList = [];
 	firebase
 		.firestore()
+		.collection('diary')
+		.doc('uid')
 		.collection(uid)
 		.get()
 		.then(docs => {
@@ -136,6 +142,8 @@ export const getSearchList = (uid, year, month) => dispatch => {
 	const searchList = [];
 	firebase
 		.firestore()
+		.collection('diary')
+		.doc('uid')
 		.collection(uid)
 		.where('year', '==', year)
 		.where('month', '==', month)
@@ -167,6 +175,8 @@ export const getDayDiary = (uid, year, month, day) => dispatch => {
 	const dayDiary = [];
 	firebase
 		.firestore()
+		.collection('diary')
+		.doc('uid')
 		.collection(uid)
 		.where('year', '==', year)
 		.where('month', '==', month)
@@ -198,6 +208,8 @@ export const getDayDiary = (uid, year, month, day) => dispatch => {
 export const updateDiary = (uid, data) => dispatch => {
 	firebase
 		.firestore()
+		.collection('diary')
+		.doc('uid')
 		.collection(uid)
 		.doc(data.id)
 		.set(data)
@@ -218,6 +230,8 @@ export const updateDiary = (uid, data) => dispatch => {
 export const deleteDiary = (uid, id) => dispatch => {
 	firebase
 		.firestore()
+		.collection('diary')
+		.doc('uid')
 		.collection(uid)
 		.doc(id)
 		.delete()
