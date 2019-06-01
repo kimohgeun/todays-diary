@@ -10,8 +10,10 @@ const WriteModalCon = ({
 	toggle,
 	weather,
 	input,
-	uploading,
 	uploaded,
+	uploading,
+	font,
+	color,
 	changeWriteToggle,
 	chooseWeather,
 	changeInput,
@@ -19,10 +21,8 @@ const WriteModalCon = ({
 	writeDiary,
 	initState,
 	changeUploading,
-	font,
-	color,
 }) => {
-	// 모달 토글
+	// 일기 읽기 모달
 	const onToggle = () => {
 		changeWriteToggle();
 		initState();
@@ -90,18 +90,18 @@ const WriteModalCon = ({
 	return (
 		<WriteModal
 			toggle={toggle}
-			onToggle={onToggle}
 			date={date}
 			weather={weather}
-			onChooseWeather={onChooseWeather}
 			input={input}
-			onChange={onChange}
-			onAddTime={onAddTime}
-			onSubmit={onSubmit}
 			uploading={uploading}
 			uploaded={uploaded}
 			font={font}
 			color={color}
+			onToggle={onToggle}
+			onChooseWeather={onChooseWeather}
+			onChange={onChange}
+			onAddTime={onAddTime}
+			onSubmit={onSubmit}
 		/>
 	);
 };
@@ -111,8 +111,8 @@ const mapStateToProps = state => ({
 	toggle: state.toggle.writeToggle,
 	weather: state.diary.weather,
 	input: state.diary.input,
-	uploading: state.loading.uploading,
 	uploaded: state.diary.uploaded,
+	uploading: state.loading.uploading,
 	font: state.setting.font,
 	color: state.setting.color,
 });

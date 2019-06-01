@@ -30,9 +30,9 @@ const Day = styled.span`
 	font-weight: 700;
 	padding: 5px;
 	color: ${props => {
-		if (props.color === 'SAT') {
+		if (props.dayOfWeek === 'SAT') {
 			return '#3498db';
-		} else if (props.color === 'SUN') {
+		} else if (props.dayOfWeek === 'SUN') {
 			return '#e74c3c';
 		} else {
 			return '#424242';
@@ -46,9 +46,9 @@ const DayOfWeek = styled.span`
 	font-weight: 700;
 	margin: 5px;
 	color: ${props => {
-		if (props.color === 'SAT') {
+		if (props.dayOfWeek === '토') {
 			return '#3498db';
-		} else if (props.color === 'SUN') {
+		} else if (props.dayOfWeek === '일') {
 			return '#e74c3c';
 		} else {
 			return '#424242';
@@ -75,8 +75,8 @@ const RightContainer = styled.div`
 const MonthItem = ({ diary, onToggle }) => (
 	<Container onClick={onToggle}>
 		<LeftContainer>
-			<Day color={diary.dayOfWeek}>{diary.day}</Day>
-			<DayOfWeek color={diary.dayOfWeek}>{diary.dayOfWeek}</DayOfWeek>
+			<Day dayOfWeek={diary.dayOfWeek}>{diary.day}</Day>
+			<DayOfWeek dayOfWeek={diary.dayOfWeek}>{diary.dayOfWeek}</DayOfWeek>
 			<Weather className={diary.weather} />
 		</LeftContainer>
 		<RightContainer>{diary.text.replace(/<br\s*\/?>/gm, '\n')}</RightContainer>

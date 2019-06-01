@@ -1,41 +1,41 @@
 import React, { useState, useEffect } from 'react';
 import ReadDiary from '../components/ReadDiary';
 import { connect } from 'react-redux';
-import { changeReadToggle, chnageDeleteToggle } from '../store/toggle';
-import { chooseWeather, changeInput, addTime, updateDiary, initState } from '../store/diary';
-import { changeUploading, changeDayDiary } from '../store/loading';
+import { changeReadToggle, changeDeleteToggle } from '../store/toggle';
+import { changeInput, chooseWeather, addTime, updateDiary, initState } from '../store/diary';
+import { changeDayDiaryLoading, changeUploading } from '../store/loading';
 
 const ReadDiaryCon = ({
 	user,
 	toggle,
-	loading,
 	dayDiary,
 	weather,
 	input,
-	uploading,
 	updated,
+	dayDiaryLoading,
+	uploading,
+	font,
+	color,
 	changeReadToggle,
-	chooseWeather,
+	changeDeleteToggle,
 	changeInput,
+	chooseWeather,
 	addTime,
 	updateDiary,
 	initState,
+	changeDayDiaryLoading,
 	changeUploading,
-	changeDayDiary,
-	chnageDeleteToggle,
-	font,
-	color,
 }) => {
-	// 모달 토글
-	const onToggle = () => {
+	// 읽기 모달 토글
+	const onReadToggle = () => {
 		changeReadToggle();
-		changeDayDiary();
+		changeDayDiaryLoading();
 		initState();
 	};
 
 	// 삭제 모달 토글
 	const onDeleteToggle = () => {
-		chnageDeleteToggle();
+		changeDeleteToggle();
 	};
 
 	// 수정버튼 활성화
@@ -82,7 +82,7 @@ const ReadDiaryCon = ({
 	useEffect(() => {
 		if (updated) {
 			setTimeout(() => {
-				onToggle();
+				onReadToggle();
 			}, 2000);
 		}
 	}, [updated]);
@@ -91,20 +91,20 @@ const ReadDiaryCon = ({
 		<ReadDiary
 			active={active}
 			toggle={toggle}
-			onToggle={onToggle}
-			loading={loading}
 			dayDiary={dayDiary}
 			weather={weather}
-			onChooseWeather={onChooseWeather}
 			input={input}
+			updated={updated}
+			dayDiaryLoading={dayDiaryLoading}
+			uploading={uploading}
+			font={font}
+			color={color}
+			onReadToggle={onReadToggle}
+			onDeleteToggle={onDeleteToggle}
+			onChooseWeather={onChooseWeather}
 			onChange={onChange}
 			onAddTime={onAddTime}
 			onSubmit={onSubmit}
-			uploading={uploading}
-			updated={updated}
-			onDeleteToggle={onDeleteToggle}
-			font={font}
-			color={color}
 		/>
 	);
 };
@@ -112,12 +112,12 @@ const ReadDiaryCon = ({
 const mapStateToProps = state => ({
 	user: state.auth.user,
 	toggle: state.toggle.readToggle,
-	loading: state.loading.dayDiary,
 	dayDiary: state.diary.dayDiary,
 	weather: state.diary.weather,
 	input: state.diary.input,
-	uploading: state.loading.uploading,
 	updated: state.diary.updated,
+	dayDiaryLoading: state.loading.dayDiaryLoading,
+	uploading: state.loading.uploading,
 	font: state.setting.font,
 	color: state.setting.color,
 });
@@ -126,13 +126,13 @@ export default connect(
 	mapStateToProps,
 	{
 		changeReadToggle,
-		chooseWeather,
+		changeDeleteToggle,
 		changeInput,
+		chooseWeather,
 		addTime,
 		updateDiary,
 		initState,
+		changeDayDiaryLoading,
 		changeUploading,
-		changeDayDiary,
-		chnageDeleteToggle,
 	}
 )(ReadDiaryCon);

@@ -3,25 +3,29 @@ const CHANGE_READ_TOGGLE = 'CHANGE_READ_TOGGLE';
 const CHANGE_NOTIFICATION_TOGGLE = 'CHANGE_NOTIFICATION_TOGGLE';
 const CHANGE_DELETE_TOGGLE = 'CHANGE_DELETE_TOGGLE';
 
+// 일기 쓰기 토글
 export const changeWriteToggle = () => {
 	return {
 		type: CHANGE_WRITE_TOGGLE,
 	};
 };
 
+// 일기 읽기 토글
 export const changeReadToggle = () => {
 	return {
 		type: CHANGE_READ_TOGGLE,
 	};
 };
 
+// 알림창 로딩
 export const changeNotificationToggle = () => {
 	return {
 		type: CHANGE_NOTIFICATION_TOGGLE,
 	};
 };
 
-export const chnageDeleteToggle = () => {
+// 일기 삭제 토글
+export const changeDeleteToggle = () => {
 	return {
 		type: CHANGE_DELETE_TOGGLE,
 	};

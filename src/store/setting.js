@@ -1,8 +1,10 @@
 import firebase from '../config/firebase';
+import { changeSettingLoading } from './loading';
 
 const CHANGE_FONT = 'CHANGE_COLOR';
 const CHANGE_MODAL_COLOR = 'CHANGE_MODAL_COLOR';
 
+// 세팅 가져오기
 export const getSetting = uid => dispatch => {
 	const setting = [];
 	firebase
@@ -30,9 +32,11 @@ export const getSetting = uid => dispatch => {
 					});
 				}
 			});
-		});
+		})
+		.then(() => dispatch(changeSettingLoading()));
 };
 
+// 폰트 바꾸기
 export const changeFont = (uid, font) => dispatch => {
 	firebase
 		.firestore()
@@ -49,6 +53,7 @@ export const changeFont = (uid, font) => dispatch => {
 		);
 };
 
+// 모달 색상 바꾸기
 export const changeModalColor = (uid, color) => dispatch => {
 	firebase
 		.firestore()

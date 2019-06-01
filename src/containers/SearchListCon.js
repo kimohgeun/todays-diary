@@ -19,7 +19,7 @@ const SearchListCon = ({ match, user, searchList, loading, getSearchList, initSt
 const mapStateToProps = state => ({
 	user: state.auth.user,
 	searchList: state.diary.searchList,
-	loading: state.loading.searchList,
+	loading: state.loading.searchListLoading,
 });
 
 export default connect(

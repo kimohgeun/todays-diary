@@ -1,27 +1,29 @@
 import React, { useEffect } from 'react';
 import DeleteModal from '../components/DeleteModal';
 import { connect } from 'react-redux';
-import { chnageDeleteToggle, changeReadToggle } from '../store/toggle';
+import { changeDeleteToggle, changeReadToggle } from '../store/toggle';
 import { deleteDiary, initState } from '../store/diary';
-import { changeDeleting, changeDayDiary } from '../store/loading';
+import { changeDayDiaryLoading, changeDeleting } from '../store/loading';
 
 const DeleteModalCon = ({
 	user,
 	dayDiary,
 	toggle,
-	chnageDeleteToggle,
-	deleteDiary,
-	changeDeleting,
 	loading,
 	deleted,
-	initState,
+	changeDeleteToggle,
 	changeReadToggle,
-	changeDayDiary,
+	deleteDiary,
+	initState,
+	changeDayDiaryLoading,
+	changeDeleting,
 }) => {
+	// 삭제 모달 토글
 	const onToggle = () => {
-		chnageDeleteToggle();
+		changeDeleteToggle();
 	};
 
+	// 일기 삭제
 	const onDeleteDiary = () => {
 		const uid = user.uid;
 		const id = dayDiary.id;
@@ -34,12 +36,12 @@ const DeleteModalCon = ({
 		if (deleted) {
 			onToggle();
 			initState();
-			changeDayDiary();
+			changeDayDiaryLoading();
 			changeReadToggle();
 		}
 	}, [deleted]);
 
-	return <DeleteModal toggle={toggle} onToggle={onToggle} onDeleteDiary={onDeleteDiary} loading={loading} />;
+	return <DeleteModal toggle={toggle} loading={loading} onToggle={onToggle} onDeleteDiary={onDeleteDiary} />;
 };
 
 const mapStateToProps = state => ({
@@ -52,5 +54,12 @@ const mapStateToProps = state => ({
 
 export default connect(
 	mapStateToProps,
-	{ chnageDeleteToggle, deleteDiary, changeDeleting, initState, changeReadToggle, changeDayDiary }
+	{
+		changeDeleteToggle,
+		changeReadToggle,
+		deleteDiary,
+		initState,
+		changeDayDiaryLoading,
+		changeDeleting,
+	}
 )(DeleteModalCon);

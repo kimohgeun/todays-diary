@@ -1,105 +1,122 @@
-const CHANGE_MONTH_LIST = 'CHANGE_MONTH_LIST';
-const CHANGE_YEAR_LIST = 'CHANGE_YEAR_LIST';
-const CHANGE_DAY_DIARY = 'CHANGE_DAY_DIARY';
-const CHANGE_SEARCH_LIST = 'CHANGE_SEARCH_LIST';
-const CHANGE_SETTING = 'CHANGE_SETTING';
+const CHANGE_AUTH_LOADING = 'CHANGE_AUTH_LOADING';
+const CHANGE_MONTH_LIST_LOADING = 'CHANGE_MONTH_LIST_LOADING';
+const CHANGE_SETTING_LOADING = 'CHANGE_SETTING_LOADING';
 const CHANGE_UPLOADING = 'CHANGE_UPLOADING';
+const CHANGE_DAY_DIARY_LOADING = 'CHANGE_DAY_DIARY_LOADING';
 const CHANGE_DELETING = 'CHANGE_DELETING';
+const CHANGE_YEAR_LIST_LOADING = 'CHANGE_YEAR_LIST_LOADING';
+const CHANGE_SEARCH_LIST_LOADING = 'CHANGE_SEARCH_LIST_LOADINg';
 
-
-export const changeMonthList = () => {
+// 유저 인증 로딩
+export const chagneAuthLoading = () => {
 	return {
-		type: CHANGE_MONTH_LIST,
+		type: CHANGE_AUTH_LOADING,
 	};
 };
 
-export const changeYearList = () => {
+// 이번달 작성한 일기 로딩
+export const changeMonthListLoading = () => {
 	return {
-		type: CHANGE_YEAR_LIST,
+		type: CHANGE_MONTH_LIST_LOADING,
 	};
 };
 
-export const changeDayDiary = () => {
+// 세팅 로딩
+export const changeSettingLoading = () => {
 	return {
-		type: CHANGE_DAY_DIARY,
+		type: CHANGE_SETTING_LOADING,
 	};
 };
 
-export const changeSearchList = state => {
-	return {
-		type: CHANGE_SEARCH_LIST,
-		payload: state,
-	};
-};
-
+// 일기 업로드 로딩
 export const changeUploading = () => {
 	return {
 		type: CHANGE_UPLOADING,
 	};
 };
 
+// 일기 보기 로딩
+export const changeDayDiaryLoading = () => {
+	return {
+		type: CHANGE_DAY_DIARY_LOADING,
+	};
+};
+
+// 일기 삭제 로딩
 export const changeDeleting = () => {
 	return {
 		type: CHANGE_DELETING,
 	};
 };
 
-export const changeSetting = () => {
+// 연도별 일기장 로딩
+export const changeYearListLoading = () => {
 	return {
-		type: CHANGE_SETTING,
+		type: CHANGE_YEAR_LIST_LOADING,
+	};
+};
+
+// 일기 검색 로딩
+export const changeSearchListLoading = state => {
+	return {
+		type: CHANGE_SEARCH_LIST_LOADING,
+		payload: state,
 	};
 };
 
 export const initialState = {
-	// 데이터를 가져오는 로딩
-	monthList: true,
-	yearList: true,
-	dayDiary: true,
-	searchList: true,
-	setting: true,
-	// 데이터를 변경하는 로딩
+	authLoading: true,
+	monthListLoading: true,
+	settingLoading: true,
 	uploading: false,
+	dayDiaryLoading: true,
 	deleting: false,
+	yearListLoading: true,
+	searchListLoading: true,
 };
 
 export const loadingReducer = (state = initialState, action) => {
 	switch (action.type) {
-		case CHANGE_MONTH_LIST:
+		case CHANGE_AUTH_LOADING:
 			return {
 				...state,
-				monthList: false,
+				authLoading: false,
 			};
-		case CHANGE_YEAR_LIST:
+		case CHANGE_MONTH_LIST_LOADING:
 			return {
 				...state,
-				yearList: false,
+				monthListLoading: false,
 			};
-		case CHANGE_DAY_DIARY:
+		case CHANGE_SETTING_LOADING:
 			return {
 				...state,
-				dayDiary: !state.dayDiary,
-			};
-		case CHANGE_SEARCH_LIST:
-			return {
-				...state,
-				searchList: action.payload,
-			};
-		case CHANGE_SETTING:
-			return {
-				...state,
-				setting: false,
+				settingLoading: false,
 			};
 		case CHANGE_UPLOADING:
 			return {
 				...state,
 				uploading: !state.uploading,
 			};
+		case CHANGE_DAY_DIARY_LOADING:
+			return {
+				...state,
+				dayDiaryLoading: !state.dayDiaryLoading,
+			};
 		case CHANGE_DELETING:
 			return {
 				...state,
 				deleting: !state.deleting,
 			};
-
+		case CHANGE_YEAR_LIST_LOADING:
+			return {
+				...state,
+				yearListLoading: false,
+			};
+		case CHANGE_SEARCH_LIST_LOADING:
+			return {
+				...state,
+				searchListLoading: action.payload,
+			};
 		default:
 			return state;
 	}

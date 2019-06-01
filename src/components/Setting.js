@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const Box = styled.div`
 	width: 1024px;
@@ -96,5 +97,12 @@ const Setting = ({ font, color, onChangeFont, onChangeModalColor }) => (
 		</Container>
 	</Box>
 );
+
+Setting.propTypes = {
+	font: PropTypes.string,
+	color: PropTypes.string,
+	onChangeFont: PropTypes.func,
+	onChangeModalColor: PropTypes.func,
+};
 
 export default Setting;

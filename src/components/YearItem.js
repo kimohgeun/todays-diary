@@ -1,5 +1,6 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import monkey from '../assets/monkey.png';
 import chicken from '../assets/chicken.png';
@@ -36,7 +37,6 @@ const Container = styled.li`
 	}
 	transition: transform 0.2s linear;
 	cursor: pointer;
-	font-family: 'Jua', sans-serif;
 	background-color: #fff;
 `;
 
@@ -174,5 +174,11 @@ const YearItem = ({ year, monthList, onLoading }) => (
 		</Bottom>
 	</Container>
 );
+
+YearItem.propTypes = {
+	year: PropTypes.string,
+	monthList: PropTypes.array,
+	onLoading: PropTypes.func,
+};
 
 export default YearItem;

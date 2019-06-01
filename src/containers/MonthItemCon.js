@@ -4,11 +4,14 @@ import { connect } from 'react-redux';
 import { getDayDiary } from '../store/diary';
 import { changeReadToggle } from '../store/toggle';
 
-const MonthItemCon = ({ diary, changeReadToggle, user, getDayDiary }) => {
-	// 일기 가져오기 & 모달 토글
+const MonthItemCon = ({ diary, user, getDayDiary, changeReadToggle }) => {
+	// 일기 읽기 모달
+	const { uid } = user;
+	const { year, month, day } = diary;
+
 	const onToggle = () => {
 		changeReadToggle();
-		getDayDiary(user.uid, diary.year, diary.month, diary.day);
+		getDayDiary(uid, year, month, day);
 	};
 
 	return <MonthItem diary={diary} onToggle={onToggle} />;

@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import YearItem from '../containers/YearItemCon';
 import Loading from './Loading';
 import Null from './Null';
@@ -8,6 +9,7 @@ const Box = styled.div`
 	width: 1024px;
 	padding: 50px 0;
 	margin: 0 auto;
+	font-family: ${props => props.font};
 `;
 
 const Title = styled.span`
@@ -21,11 +23,11 @@ const Container = styled.ul`
 	width: 100%;
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
-	grid-gap: 100px;
+	grid-gap: 80px;
 `;
 
-const YearList = ({ yearList, loading }) => (
-	<Box>
+const YearList = ({ yearList, loading, font }) => (
+	<Box font={font}>
 		<Title>일기장 목록</Title>
 		{loading ? (
 			<Loading />
@@ -44,5 +46,11 @@ const YearList = ({ yearList, loading }) => (
 		)}
 	</Box>
 );
+
+YearList.propTypes = {
+	yearList: PropTypes.array,
+	loading: PropTypes.bool,
+	font: PropTypes.string,
+};
 
 export default YearList;

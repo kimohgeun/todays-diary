@@ -136,18 +136,18 @@ const Mark = styled.div`
 
 const WriteModal = ({
 	toggle,
-	onToggle,
 	date,
 	weather,
-	onChooseWeather,
 	input,
-	onChange,
-	onAddTime,
-	onSubmit,
 	uploading,
 	uploaded,
 	font,
 	color,
+	onToggle,
+	onChooseWeather,
+	onChange,
+	onAddTime,
+	onSubmit,
 }) => (
 	<Box toggle={toggle} font={font} color={color}>
 		<CancelIcon className="fas fa-times" onClick={onToggle} color={color} />
@@ -204,16 +204,18 @@ const WriteModal = ({
 
 WriteModal.propTypes = {
 	toggle: PropTypes.bool,
-	onToggle: PropTypes.func,
 	date: PropTypes.object,
 	weather: PropTypes.string,
-	onChooseWeather: PropTypes.func,
 	input: PropTypes.string,
+	uploading: PropTypes.bool,
+	uploaded: PropTypes.bool,
+	font: PropTypes.string,
+	color: PropTypes.string,
+	onToggle: PropTypes.func,
+	onChooseWeather: PropTypes.func,
 	onChange: PropTypes.func,
 	onAddTime: PropTypes.func,
 	onSubmit: PropTypes.func,
-	uploading: PropTypes.bool,
-	uploaded: PropTypes.bool,
 };
 
 export default WriteModal;

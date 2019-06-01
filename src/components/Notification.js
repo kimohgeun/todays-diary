@@ -1,5 +1,6 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
+import PropTypes from 'prop-types';
 
 const fade = keyframes`
 	from {
@@ -42,5 +43,9 @@ const Notification = ({ toggle }) => (
 		</Container>
 	</Box>
 );
+
+Notification.propTypes = {
+	toggle: PropTypes.bool,
+};
 
 export default Notification;

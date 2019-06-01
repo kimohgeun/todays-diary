@@ -37,7 +37,7 @@ const Icon = styled.i`
 	}
 `;
 
-const Header = withRouter(({ location: { pathname }, onLogout, onToggle, toggle }) => (
+const Header = withRouter(({ location: { pathname }, toggle, onLogout, onToggle }) => (
 	<Box>
 		<Notification toggle={toggle} />
 		<WriteModal />
@@ -61,6 +61,7 @@ const Header = withRouter(({ location: { pathname }, onLogout, onToggle, toggle 
 ));
 
 Header.propTypes = {
+	toggle: PropTypes.bool,
 	onLogout: PropTypes.func,
 	onToggle: PropTypes.func,
 };

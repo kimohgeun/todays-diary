@@ -1,26 +1,62 @@
 import firebase from '../config/firebase';
 import {
-	changeMonthList,
-	changeYearList,
-	changeDayDiary,
-	changeSearchList,
+	changeMonthListLoading,
+	changeDayDiaryLoading,
 	changeUploading,
 	changeDeleting,
+	changeYearListLoading,
+	changeSearchListLoading,
 } from './loading';
 
+const GET_MONTH_LIST = 'GET_MONTH_LIST';
 const CHANGE_INPUT = 'CHANGE_INPUT';
 const CHOOSE_WEATHER = 'CHOOSE_WEATHER';
 const ADD_TIME = 'ADD_TIME';
 const WRITE_DIARY = 'WRITE_DIARY';
 const INIT_STATE = 'INIT_STATE';
-const GET_MONTH_LIST = 'GET_MONTH_LIST';
 const GET_YEAR_LIST = 'GET_YEAR_LIST';
 const GET_SEARCH_LIST = 'GET_SEARCH_LIST';
 const GET_DAY_DIARY = 'GET_DAY_DIARY';
 const UPDATE_DIARY = 'UPDATE_DIARY';
 const DELETE_DIARY = 'DELETE_DIARY';
 
-// input 상태 변경
+// 이번달 일기 리스트 가져오기
+export const getMonthList = uid => dispatch => {
+	const monthList = [];
+	const date = new Date();
+	const year = date.getFullYear();
+	const month = date.getMonth() + 1;
+	firebase
+		.firestore()
+		.collection('diary')
+		.doc('uid')
+		.collection(uid)
+		.where('year', '==', year.toString())
+		.where('month', '==', month.toString())
+		.get()
+		.then(docs => {
+			docs.forEach(doc => {
+				monthList.push({
+					id: doc.id,
+					year: doc.data().year,
+					month: doc.data().month,
+					day: doc.data().day,
+					dayOfWeek: doc.data().dayOfWeek,
+					weather: doc.data().weather,
+					text: doc.data().text,
+				});
+			});
+		})
+		.then(() =>
+			dispatch({
+				type: GET_MONTH_LIST,
+				payload: monthList,
+			})
+		)
+		.then(() => dispatch(changeMonthListLoading()));
+};
+
+// 텍스트 입력
 export const changeInput = input => {
 	return {
 		type: CHANGE_INPUT,
@@ -48,7 +84,7 @@ export const addTime = () => {
 	} else {
 		str = '오전';
 	}
-	const time = `${str} ${hour}:${minute}`;
+	const time = `${str} ${hour > 9 ? hour : `0${hour}`}:${minute > 9 ? minute : `0${minute}`}`;
 	return {
 		type: ADD_TIME,
 		payload: time,
@@ -80,40 +116,6 @@ export const initState = () => {
 	};
 };
 
-// 이번달 일기 리스트 가져오기
-export const getMonthList = uid => dispatch => {
-	const monthList = [];
-	const date = new Date();
-	const month = date.getMonth() + 1;
-	firebase
-		.firestore()
-		.collection('diary')
-		.doc('uid')
-		.collection(uid)
-		.where('month', '==', month.toString())
-		.get()
-		.then(docs => {
-			docs.forEach(doc => {
-				monthList.push({
-					id: doc.id,
-					year: doc.data().year,
-					month: doc.data().month,
-					day: doc.data().day,
-					dayOfWeek: doc.data().dayOfWeek,
-					weather: doc.data().weather,
-					text: doc.data().text,
-				});
-			});
-		})
-		.then(() =>
-			dispatch({
-				type: GET_MONTH_LIST,
-				payload: monthList,
-			})
-		)
-		.then(() => dispatch(changeMonthList()));
-};
-
 // 연도별 리스트 가져오기
 export const getYearList = uid => dispatch => {
 	const yearList = [];
@@ -134,7 +136,7 @@ export const getYearList = uid => dispatch => {
 				payload: Array.from(new Set(yearList)),
 			})
 		)
-		.then(() => dispatch(changeYearList()));
+		.then(() => dispatch(changeYearListLoading()));
 };
 
 // 일기 검색
@@ -167,7 +169,7 @@ export const getSearchList = (uid, year, month) => dispatch => {
 				payload: searchList,
 			})
 		)
-		.then(() => dispatch(changeSearchList(false)));
+		.then(() => dispatch(changeSearchListLoading(false)));
 };
 
 // 작성된 일기 가져오기
@@ -201,7 +203,7 @@ export const getDayDiary = (uid, year, month, day) => dispatch => {
 				payload: dayDiary,
 			})
 		)
-		.then(() => dispatch(changeDayDiary()));
+		.then(() => dispatch(changeDayDiaryLoading()));
 };
 
 // 일기 수정하기

@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import Loading from './Loading';
 
 const Box = styled.div`
@@ -47,7 +48,7 @@ const Button = styled.button`
 	}
 `;
 
-const DeleteModal = ({ toggle, onToggle, onDeleteDiary, loading }) => (
+const DeleteModal = ({ toggle, loading, onToggle, onDeleteDiary }) => (
 	<Box toggle={toggle}>
 		{loading && <Loading />}
 		<Container>
@@ -65,5 +66,12 @@ const DeleteModal = ({ toggle, onToggle, onDeleteDiary, loading }) => (
 		</Container>
 	</Box>
 );
+
+DeleteModal.propTypes = {
+	toggle: PropTypes.bool,
+	loading: PropTypes.bool,
+	onToggle: PropTypes.func,
+	onDeleteDiary: PropTypes.func,
+};
 
 export default DeleteModal;

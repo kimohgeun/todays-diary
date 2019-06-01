@@ -1,5 +1,6 @@
 import React from 'react';
 import styled, { keyframes } from 'styled-components';
+import PropTypes from 'prop-types';
 import Loading from './Loading';
 import DeleteModal from '../containers/DeleteModalCon';
 
@@ -147,26 +148,25 @@ const Mark = styled.div`
 const ReadDiary = ({
 	active,
 	toggle,
-	onToggle,
-	loading,
 	dayDiary,
 	weather,
-	onChooseWeather,
 	input,
+	updated,
+	dayDiaryLoading,
+	uploading,
+	font,
+	color,
+	onReadToggle,
+	onDeleteToggle,
+	onChooseWeather,
 	onChange,
 	onAddTime,
 	onSubmit,
-	uploading,
-	updated,
-	onDeleteToggle,
-	font,
-	color,
 }) => (
 	<Box toggle={toggle} font={font} color={color}>
-		<CancelIcon className="fas fa-times" onClick={onToggle} color={color} />
+		<CancelIcon className="fas fa-times" onClick={onReadToggle} color={color} />
 		<DeleteModal />
-		{loading && <Loading />}
-		{uploading && <Loading />}
+		{dayDiaryLoading && uploading && <Loading />}
 		<Form onSubmit={onSubmit}>
 			<Container>
 				<Date>
@@ -219,5 +219,24 @@ const ReadDiary = ({
 		</Form>
 	</Box>
 );
+
+ReadDiary.propTypes = {
+	active: PropTypes.bool,
+	toggle: PropTypes.bool,
+	dayDiary: PropTypes.array,
+	weather: PropTypes.string,
+	input: PropTypes.string,
+	updated: PropTypes.bool,
+	dayDiaryLoading: PropTypes.bool,
+	uploading: PropTypes.bool,
+	font: PropTypes.string,
+	color: PropTypes.string,
+	onReadToggle: PropTypes.func,
+	onDeleteToggle: PropTypes.func,
+	onChooseWeather: PropTypes.func,
+	onChange: PropTypes.func,
+	onAddTime: PropTypes.func,
+	onSubmit: PropTypes.func,
+};
 
 export default ReadDiary;

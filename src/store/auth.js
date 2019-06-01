@@ -1,4 +1,5 @@
 import firebase from '../config/firebase';
+import { chagneAuthLoading } from './loading';
 
 const GOOGLE_LOGIN = 'GOOGLE_LOGIN';
 const FACEBOOK_LOGIN = 'FACEBOOK_LOGIN';
@@ -6,6 +7,7 @@ const GET_AUTH_SUCCESS = 'GET_AUTH_SUCCESS';
 const GET_AUTH_FAIL = 'GET_AUTH_FAIL';
 const LOGOUT = 'LOGOUT';
 
+// 구글 로그인
 export const googleLogin = () => dispatch => {
 	const provider = new firebase.auth.GoogleAuthProvider();
 	firebase
@@ -17,11 +19,10 @@ export const googleLogin = () => dispatch => {
 				payload: res.user,
 			});
 		})
-		.catch(err => {
-			throw err;
-		});
+		.then(() => dispatch(chagneAuthLoading()));
 };
 
+// 페이스북 로그인
 export const facebookLogin = () => dispatch => {
 	const provider = new firebase.auth.FacebookAuthProvider();
 	firebase
@@ -33,26 +34,30 @@ export const facebookLogin = () => dispatch => {
 				payload: res.user,
 			});
 		})
-		.catch(err => {
-			throw err;
-		});
+		.then(() => dispatch(chagneAuthLoading()));
 };
 
+// 유저 인증
 export const getAuth = () => dispatch => {
 	firebase.auth().onAuthStateChanged(user => {
 		if (user) {
+			// 인증 성공
 			dispatch({
 				type: GET_AUTH_SUCCESS,
 				payload: user,
 			});
+			dispatch(chagneAuthLoading());
 		} else {
+			// 인증 실패
 			dispatch({
 				type: GET_AUTH_FAIL,
 			});
+			dispatch(chagneAuthLoading());
 		}
 	});
 };
 
+// 로그아웃
 export const logout = () => dispatch => {
 	firebase
 		.auth()
@@ -65,7 +70,6 @@ export const logout = () => dispatch => {
 };
 
 const initialState = {
-	loading: true,
 	isAuthenticated: false,
 	user: null,
 };
@@ -77,7 +81,6 @@ export const authReducer = (state = initialState, action) => {
 		case GET_AUTH_SUCCESS:
 			return {
 				...state,
-				loading: false,
 				isAuthenticated: true,
 				user: action.payload,
 			};
@@ -87,7 +90,6 @@ export const authReducer = (state = initialState, action) => {
 				...state,
 				user: null,
 				isAuthenticated: false,
-				loading: false,
 			};
 		default:
 			return state;

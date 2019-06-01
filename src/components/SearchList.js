@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 import Loading from './Loading';
 import Null from './Null';
 import MonthItem from '../containers/MonthItemCon';
@@ -46,5 +47,10 @@ const SearchList = ({ match, searchList, loading }) => (
 		)}
 	</Box>
 );
+
+SearchList.propTypes = {
+	searchList: PropTypes.array,
+	loading: PropTypes.bool,
+};
 
 export default SearchList;

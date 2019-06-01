@@ -10,7 +10,7 @@ const HeaderCon = ({ monthList, logout, changeWriteToggle, toggle, changeNotific
 		logout();
 	};
 
-	// 모달 토글
+	// 알림창 모달
 	const onToggle = () => {
 		const check = checkTodayDiary();
 		if (check.length !== 0) {
@@ -29,13 +29,11 @@ const HeaderCon = ({ monthList, logout, changeWriteToggle, toggle, changeNotific
 		const year = date.getFullYear();
 		const month = date.getMonth() + 1;
 		const day = date.getDate();
-
 		const checkDiary = monthList.filter(item => item.id === `${year}-${month}-${day}`);
-
 		return checkDiary;
 	};
 
-	return <Header onLogout={onLogout} onToggle={onToggle} toggle={toggle} />;
+	return <Header toggle={toggle} onLogout={onLogout} onToggle={onToggle} />;
 };
 
 const mapStateToProps = state => ({

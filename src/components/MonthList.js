@@ -9,6 +9,7 @@ const Box = styled.div`
 	width: 1024px;
 	padding: 50px 0;
 	margin: 0 auto;
+	font-family: ${props => props.font};
 `;
 
 const Title = styled.span`
@@ -25,8 +26,8 @@ const Container = styled.ul`
 	grid-gap: 20px;
 `;
 
-const MonthList = ({ month, monthList }) => (
-	<Box>
+const MonthList = ({ month, font, monthList }) => (
+	<Box font={font}>
 		<ReadDiary />
 		<Title>{month}월의 일기</Title>
 		{monthList.length === 0 ? (
@@ -43,6 +44,7 @@ const MonthList = ({ month, monthList }) => (
 
 MonthList.propTypes = {
 	month: PropTypes.number,
+	font: PropTypes.string,
 	monthList: PropTypes.array,
 };
 

@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import PropTypes from 'prop-types';
 
 const Container = styled.div`
 	text-align: center;
@@ -23,5 +24,10 @@ const Null = ({ icon, text }) => (
 		<span>{text}</span>
 	</Container>
 );
+
+Null.propTypes = {
+	icon: PropTypes.string,
+	text: PropTypes.string,
+};
 
 export default Null;
