@@ -19,6 +19,26 @@ const Title = styled.span`
 	font-size: 0.9rem;
 `;
 
+const TopContainer = styled.div`
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+`;
+
+const Button = styled.button`
+	all: unset;
+	font-size: 0.7rem;
+	background-color: #424242;
+	color: #fff;
+	padding: 5px;
+	margin-left: 10px;
+	border-radius: 5px;
+	cursor: pointer;
+	&:hover {
+		background-color: #616161;
+	}
+`;
+
 const Container = styled.ul`
 	width: 100%;
 	display: grid;
@@ -26,9 +46,19 @@ const Container = styled.ul`
 	grid-gap: 80px;
 `;
 
-const YearList = ({ yearList, loading, font }) => (
+const YearList = ({ yearList, loading, font, onSortUp, onSortDown }) => (
 	<Box font={font}>
-		<Title>일기장 목록</Title>
+		<TopContainer>
+			<Title>일기장 목록</Title>
+			<div>
+				<Button onClick={onSortUp}>
+					<i className="far fa-arrow-alt-circle-up" /> 오름차순
+				</Button>
+				<Button onClick={onSortDown}>
+					<i className="far fa-arrow-alt-circle-down" /> 내림차순
+				</Button>
+			</div>
+		</TopContainer>
 		{loading ? (
 			<Loading />
 		) : (
@@ -51,6 +81,8 @@ YearList.propTypes = {
 	yearList: PropTypes.array,
 	loading: PropTypes.bool,
 	font: PropTypes.string,
+	onSortUp: PropTypes.func,
+	onSortDown: PropTypes.func,
 };
 
 export default YearList;

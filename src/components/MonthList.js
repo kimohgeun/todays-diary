@@ -19,6 +19,26 @@ const Title = styled.span`
 	font-size: 0.9rem;
 `;
 
+const TopContainer = styled.div`
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+`;
+
+const Button = styled.button`
+	all: unset;
+	font-size: 0.7rem;
+	background-color: #424242;
+	color: #fff;
+	padding: 5px;
+	margin-left: 10px;
+	border-radius: 5px;
+	cursor: pointer;
+	&:hover {
+		background-color: #616161;
+	}
+`;
+
 const Container = styled.ul`
 	width: 100%;
 	display: grid;
@@ -26,10 +46,20 @@ const Container = styled.ul`
 	grid-gap: 20px;
 `;
 
-const MonthList = ({ month, font, monthList }) => (
+const MonthList = ({ month, font, monthList, onSortUp, onSortDown }) => (
 	<Box font={font}>
 		<ReadDiary />
-		<Title>{month}월의 일기</Title>
+		<TopContainer>
+			<Title>{month}월의 일기</Title>
+			<div>
+				<Button onClick={onSortUp}>
+					<i className="far fa-arrow-alt-circle-up" /> 오름차순
+				</Button>
+				<Button onClick={onSortDown}>
+					<i className="far fa-arrow-alt-circle-down" /> 내림차순
+				</Button>
+			</div>
+		</TopContainer>
 		{monthList.length === 0 ? (
 			<Null icon="fas fa-edit" text="아직 작성된 일기가 없습니다." />
 		) : (
@@ -46,6 +76,8 @@ MonthList.propTypes = {
 	month: PropTypes.number,
 	font: PropTypes.string,
 	monthList: PropTypes.array,
+	onSortUp:PropTypes.func,
+	onSortDown: PropTypes.func,
 };
 
 export default MonthList;

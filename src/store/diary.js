@@ -19,6 +19,12 @@ const GET_SEARCH_LIST = 'GET_SEARCH_LIST';
 const GET_DAY_DIARY = 'GET_DAY_DIARY';
 const UPDATE_DIARY = 'UPDATE_DIARY';
 const DELETE_DIARY = 'DELETE_DIARY';
+const SORT_UP_MONTH_LIST = 'SORT_UP_MONTH_LIST';
+const SORT_DOWN_MONTH_LIST = 'SORT_DOWN_MONTH_LIST';
+const SORT_UP_YEAR_LIST = 'SORT_UP_YEAR_LIST';
+const SORT_DOWN_YEAR_LIST = 'SORT_DOWN_YEAR_LIST';
+const SORT_UP_SEARCH_LIST = 'SORT_UP_SEARCH_LIST';
+const SORT_DOWN_SEARCH_LIST = 'SORT_DOWN_SEARCH_LIST';
 
 // 이번달 일기 리스트 가져오기
 export const getMonthList = uid => dispatch => {
@@ -246,6 +252,39 @@ export const deleteDiary = (uid, id) => dispatch => {
 		.then(() => dispatch(changeDeleting()));
 };
 
+// 리스트 정렬하기
+export const sortUpList = listType => {
+	if (listType === 'monthList') {
+		return {
+			type: SORT_UP_MONTH_LIST,
+		};
+	} else if (listType === 'yearList') {
+		return {
+			type: SORT_UP_YEAR_LIST,
+		};
+	} else {
+		return {
+			type: SORT_UP_SEARCH_LIST,
+		};
+	}
+};
+
+export const sortDownList = listType => {
+	if (listType === 'monthList') {
+		return {
+			type: SORT_DOWN_MONTH_LIST,
+		};
+	} else if (listType === 'yearList') {
+		return {
+			type: SORT_DOWN_YEAR_LIST,
+		};
+	} else if (listType === 'searchList') {
+		return {
+			type: SORT_DOWN_SEARCH_LIST,
+		};
+	}
+};
+
 export const initialState = {
 	input: '',
 	weather: '',
@@ -347,6 +386,60 @@ export const authReducer = (state = initialState, action) => {
 				monthList: state.monthList.filter(item => action.payload.id === item.id),
 				searchList: state.searchList.filter(item => action.payload.id === item.id),
 				deleted: true,
+			};
+		case SORT_UP_MONTH_LIST:
+			return {
+				...state,
+				monthList: [
+					...state.monthList.sort((a, b) => {
+						return a.day < b.day ? -1 : a.day > b.day ? 1 : 0;
+					}),
+				],
+			};
+		case SORT_DOWN_MONTH_LIST:
+			return {
+				...state,
+				monthList: [
+					...state.monthList.sort((a, b) => {
+						return a.day > b.day ? -1 : a.day < b.day ? 1 : 0;
+					}),
+				],
+			};
+		case SORT_UP_YEAR_LIST:
+			return {
+				...state,
+				yearList: [
+					...state.yearList.sort((a, b) => {
+						return a - b;
+					}),
+				],
+			};
+		case SORT_DOWN_YEAR_LIST:
+			return {
+				...state,
+				yearList: [
+					...state.yearList.sort((a, b) => {
+						return b - a;
+					}),
+				],
+			};
+		case SORT_UP_SEARCH_LIST:
+			return {
+				...state,
+				searchList: [
+					...state.searchList.sort((a, b) => {
+						return a.day < b.day ? -1 : a.day > b.day ? 1 : 0;
+					}),
+				],
+			};
+		case SORT_DOWN_SEARCH_LIST:
+			return {
+				...state,
+				searchList: [
+					...state.searchList.sort((a, b) => {
+						return a.day > b.day ? -1 : a.day < b.day ? 1 : 0;
+					}),
+				],
 			};
 		default:
 			return state;
