@@ -24,7 +24,8 @@ const Title = styled.span`
 `;
 
 const Button = styled.button`
-	all: unset;
+	border: none;
+	outline: none;
 	width: 180px;
 	height: 35px;
 	text-align: center;
@@ -38,6 +39,7 @@ const Button = styled.button`
 		background-color: #616161;
 	}
 	display: flex;
+	align-items: center;
 `;
 
 const ButtonIcon = styled.i`

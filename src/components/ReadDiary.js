@@ -117,7 +117,8 @@ const CancelIcon = styled.i`
 `;
 
 const SaveButton = styled.button`
-	all: unset;
+	border: none;
+	outline: none;
 	font-size: 0.8rem;
 	background-color: ${props => (props.active & !props.updated ? '#424242' : '#bdbdbd')};
 	color: #fff;

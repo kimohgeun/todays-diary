@@ -4,17 +4,10 @@ import App from './components/App';
 // 리덕스 추가
 import { createStore, applyMiddleware, compose } from 'redux';
 import { Provider } from 'react-redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 import rootReducer from './store';
 
-const store = createStore(
-    rootReducer,
-    compose(
-        applyMiddleware(thunk),
-        composeWithDevTools()
-    )
-);
+const store = createStore(rootReducer, compose(applyMiddleware(thunk)));
 
 ReactDOM.render(
 	<Provider store={store}>

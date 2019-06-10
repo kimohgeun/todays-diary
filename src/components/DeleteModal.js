@@ -36,7 +36,8 @@ const ButtonContainer = styled.div`
 `;
 
 const Button = styled.button`
-	all: unset;
+	border: none;
+	outline: none;
 	padding: 10px;
 	margin: 10px;
 	background-color: ${props => props.bgColor};

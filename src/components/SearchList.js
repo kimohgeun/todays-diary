@@ -27,7 +27,8 @@ const TopContainer = styled.div`
 `;
 
 const Button = styled.button`
-	all: unset;
+	border: none;
+	outline: none;
 	font-size: 0.7rem;
 	background-color: #424242;
 	color: #fff;
