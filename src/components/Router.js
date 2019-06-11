@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+import { HashRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getAuth } from '../store/auth';
 import { getMonthList } from '../store/diary';
@@ -36,7 +36,7 @@ const Router = ({
 	}, [isAuthenticated]);
 
 	return (
-		<BrowserRouter>
+		<HashRouter>
 			{authLoading ? (
 				<Loading />
 			) : !isAuthenticated ? (
@@ -58,7 +58,7 @@ const Router = ({
 					</Switch>
 				</>
 			)}
-		</BrowserRouter>
+		</HashRouter>
 	);
 };
 
