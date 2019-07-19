@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { HashRouter, Switch, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getAuth } from '../store/auth';
 import { getMonthList } from '../store/diary';
@@ -36,7 +36,7 @@ const Router = ({
 	}, [isAuthenticated]);
 
 	return (
-		<HashRouter>
+		<BrowserRouter>
 			{authLoading ? (
 				<Loading />
 			) : !isAuthenticated ? (
@@ -51,14 +51,14 @@ const Router = ({
 					<Header />
 					<Switch>
 						<Route exact path="/" component={MonthList} />
-						<Route exact path="/year_list" component={YearList} />
-						<Route exact path="/setting" component={Setting} />
-						<Route exact path="/:year/:month" component={SearchList} />
+						<Route path="/year_list" component={YearList} />
+						<Route path="/setting" component={Setting} />
+						<Route path="/search/:year/:month" component={SearchList} />
 						<Redirect from="*" to="/" />
 					</Switch>
 				</>
 			)}
-		</HashRouter>
+		</BrowserRouter>
 	);
 };
 

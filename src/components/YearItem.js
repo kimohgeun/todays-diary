@@ -110,62 +110,62 @@ const YearItem = ({ year, monthList, onLoading }) => (
 			) : (
 				<>
 					<Month active={monthList.includes('1')}>
-						<Link to={`/${year}/1`} onClick={onLoading}>
+						<Link to={`/search/${year}/1`} onClick={onLoading}>
 							1월
 						</Link>
 					</Month>
 					<Month active={monthList.includes('2')}>
-						<Link to={`/${year}/2`} onClick={onLoading}>
+						<Link to={`/search/${year}/2`} onClick={onLoading}>
 							2월
 						</Link>
 					</Month>
 					<Month active={monthList.includes('3')}>
-						<Link to={`/${year}/3`} onClick={onLoading}>
+						<Link to={`/search/${year}/3`} onClick={onLoading}>
 							3월
 						</Link>
 					</Month>
 					<Month active={monthList.includes('4')}>
-						<Link to={`/${year}/4`} onClick={onLoading}>
+						<Link to={`/search/${year}/4`} onClick={onLoading}>
 							4월
 						</Link>
 					</Month>
 					<Month active={monthList.includes('5')}>
-						<Link to={`/${year}/5`} onClick={onLoading}>
+						<Link to={`/search/${year}/5`} onClick={onLoading}>
 							5월
 						</Link>
 					</Month>
 					<Month active={monthList.includes('6')}>
-						<Link to={`/${year}/6`} onClick={onLoading}>
+						<Link to={`/search/${year}/6`} onClick={onLoading}>
 							6월
 						</Link>
 					</Month>
 					<Month active={monthList.includes('7')}>
-						<Link to={`/${year}/7`} onClick={onLoading}>
+						<Link to={`/search/${year}/7`} onClick={onLoading}>
 							7월
 						</Link>
 					</Month>
 					<Month active={monthList.includes('8')}>
-						<Link to={`/${year}/8`} onClick={onLoading}>
+						<Link to={`/search/${year}/8`} onClick={onLoading}>
 							8월
 						</Link>
 					</Month>
 					<Month active={monthList.includes('9')}>
-						<Link to={`/${year}/9`} onClick={onLoading}>
+						<Link to={`/search/${year}/9`} onClick={onLoading}>
 							9월
 						</Link>
 					</Month>
 					<Month ctive={monthList.includes('10')}>
-						<Link to={`/${year}/10`} onClick={onLoading}>
+						<Link to={`/search/${year}/10`} onClick={onLoading}>
 							10월
 						</Link>
 					</Month>
 					<Month ctive={monthList.includes('11')}>
-						<Link to={`/${year}/11`} onClick={onLoading}>
+						<Link to={`/search/${year}/11`} onClick={onLoading}>
 							11월
 						</Link>
 					</Month>
 					<Month active={monthList.includes('12')}>
-						<Link to={`/${year}/12`} onClick={onLoading}>
+						<Link to={`/search/${year}/12`} onClick={onLoading}>
 							12월
 						</Link>
 					</Month>

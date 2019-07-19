@@ -356,7 +356,9 @@ export const authReducer = (state = initialState, action) => {
 		case GET_SEARCH_LIST:
 			return {
 				...state,
-				searchList: action.payload,
+				searchList: action.payload.sort((a, b) => {
+					return parseInt(a.day) > parseInt(b.day) ? -1 : parseInt(a.day) < parseInt(b.day) ? 1 : 0;
+				}),
 				loading: {
 					...state.loading,
 					getSearchList: false,

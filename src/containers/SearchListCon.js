@@ -18,9 +18,8 @@ const SearchListCon = ({
 	const month = match.params.month;
 
 	// 검색한 일기 가져오기
-	useEffect(async () => {
-		await getSearchList(user.uid, year, month);
-		onSortDown();
+	useEffect(() => {
+		getSearchList(user.uid, year, month);
 		initState();
 	}, []);
 
