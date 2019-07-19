@@ -21,6 +21,7 @@ const SearchListCon = ({
 	useEffect(() => {
 		getSearchList(user.uid, year, month);
 		initState();
+		onSortDown();
 	}, []);
 
 	// 오름차순 정렬

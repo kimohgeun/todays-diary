@@ -8,6 +8,7 @@ const YearListCon = ({ user, yearList, loading, font, getYearList, sortUpList, s
 	// 연도별 일기장 가져오기
 	useEffect(() => {
 		getYearList(user.uid);
+		onSortDown();
 	}, []);
 
 	// 오름차순 정렬

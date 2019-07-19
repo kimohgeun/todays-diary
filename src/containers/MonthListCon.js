@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import MonthList from '../components/MonthList';
 import { connect } from 'react-redux';
 import { sortUpList, sortDownList } from '../store/diary';
@@ -16,6 +16,10 @@ const MonthListCon = ({ monthList, font, sortUpList, sortDownList }) => {
 	const onSortDown = () => {
 		sortDownList('monthList');
 	};
+
+	useEffect(() => {
+		onSortDown();
+	}, []);
 
 	return <MonthList month={month} font={font} monthList={monthList} onSortUp={onSortUp} onSortDown={onSortDown} />;
 };
