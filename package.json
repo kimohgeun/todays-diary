@@ -21,11 +21,8 @@
 		"start": "react-scripts start",
 		"build": "react-scripts build",
 		"test": "react-scripts test",
-		"eject": "react-scripts eject",
-		"predeploy": "yarn build",
-		"deploy": "gh-pages -d build"
+		"eject": "react-scripts eject"
 	},
-	"homepage": "http://kimohgeun.github.io/todays-diary",
 	"eslintConfig": {
 		"extends": "react-app"
 	},

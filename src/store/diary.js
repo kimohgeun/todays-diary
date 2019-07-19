@@ -383,8 +383,8 @@ export const authReducer = (state = initialState, action) => {
 		case DELETE_DIARY:
 			return {
 				...state,
-				monthList: state.monthList.filter(item => action.payload.id === item.id),
-				searchList: state.searchList.filter(item => action.payload.id === item.id),
+				monthList: state.monthList.filter(item => action.payload !== item.id),
+				searchList: state.searchList.filter(item => action.payload !== item.id),
 				deleted: true,
 			};
 		case SORT_UP_MONTH_LIST:
@@ -392,7 +392,7 @@ export const authReducer = (state = initialState, action) => {
 				...state,
 				monthList: [
 					...state.monthList.sort((a, b) => {
-						return a.day < b.day ? -1 : a.day > b.day ? 1 : 0;
+						return parseInt(a.day) < parseInt(b.day) ? -1 : parseInt(a.day) > parseInt(b.day) ? 1 : 0;
 					}),
 				],
 			};
@@ -401,7 +401,7 @@ export const authReducer = (state = initialState, action) => {
 				...state,
 				monthList: [
 					...state.monthList.sort((a, b) => {
-						return a.day > b.day ? -1 : a.day < b.day ? 1 : 0;
+						return parseInt(a.day) > parseInt(b.day) ? -1 : parseInt(a.day) < parseInt(b.day) ? 1 : 0;
 					}),
 				],
 			};
@@ -410,7 +410,7 @@ export const authReducer = (state = initialState, action) => {
 				...state,
 				yearList: [
 					...state.yearList.sort((a, b) => {
-						return a - b;
+						return parseInt(a) - parseInt(b);
 					}),
 				],
 			};
@@ -419,7 +419,7 @@ export const authReducer = (state = initialState, action) => {
 				...state,
 				yearList: [
 					...state.yearList.sort((a, b) => {
-						return b - a;
+						return parseInt(b) - parseInt(a);
 					}),
 				],
 			};
@@ -428,7 +428,7 @@ export const authReducer = (state = initialState, action) => {
 				...state,
 				searchList: [
 					...state.searchList.sort((a, b) => {
-						return a.day < b.day ? -1 : a.day > b.day ? 1 : 0;
+						return parseInt(a.day) < parseInt(b.day) ? -1 : parseInt(a.day) > parseInt(b.day) ? 1 : 0;
 					}),
 				],
 			};
@@ -437,7 +437,7 @@ export const authReducer = (state = initialState, action) => {
 				...state,
 				searchList: [
 					...state.searchList.sort((a, b) => {
-						return a.day > b.day ? -1 : a.day < b.day ? 1 : 0;
+						return parseInt(a.day) > parseInt(b.day) ? -1 : parseInt(a.day) < parseInt(b.day) ? 1 : 0;
 					}),
 				],
 			};
