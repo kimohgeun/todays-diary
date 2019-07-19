@@ -18,10 +18,10 @@ const SearchListCon = ({
 	const month = match.params.month;
 
 	// 검색한 일기 가져오기
-	useEffect(() => {
-		getSearchList(user.uid, year, month);
-		initState();
+	useEffect(async () => {
+		await getSearchList(user.uid, year, month);
 		onSortDown();
+		initState();
 	}, []);
 
 	// 오름차순 정렬
